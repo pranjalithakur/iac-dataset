@@ -5,7 +5,7 @@ resource "aws_batch_job_definition" "unknown2" {
 }
 
 
-resource "aws_batch_job_definition" "fail" {
+resource "aws_batch_job_definition" "res"{
   name = "tf_test_batch_job_definition"
   type = "container"
 

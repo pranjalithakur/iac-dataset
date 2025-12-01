@@ -1,4 +1,4 @@
-resource "aws_sagemaker_notebook_instance" "fail" {
+resource "aws_sagemaker_notebook_instance" "res"{
   name                    = "my-notebook-instance"
   role_arn                = aws_iam_role.role.arn
   instance_type           = "ml.t2.medium"
@@ -9,7 +9,7 @@ resource "aws_sagemaker_notebook_instance" "fail" {
   }
 }
 
-resource "aws_sagemaker_notebook_instance" "fail2" {
+resource "aws_sagemaker_notebook_instance" "res2"{
   name                    = "my-notebook-instance"
   role_arn                = aws_iam_role.role.arn
   instance_type           = "ml.t2.medium"

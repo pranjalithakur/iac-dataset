@@ -1,9 +1,9 @@
 # fail
-resource "aws_sqs_queue" "fail" {
+resource "aws_sqs_queue" "res"{
   name = "fail"
 }
 
-resource "aws_sqs_queue_policy" "fail" {
+resource "aws_sqs_queue_policy" "res"{
   queue_url = aws_sqs_queue.fail.id
   
   policy = jsonencode({
@@ -20,11 +20,11 @@ resource "aws_sqs_queue_policy" "fail" {
   })
 }
 
-resource "aws_sqs_queue" "fail2" {
+resource "aws_sqs_queue" "res2"{
   name = "fail2"
 }
 
-resource "aws_sqs_queue_policy" "fail2" {
+resource "aws_sqs_queue_policy" "res2"{
   queue_url = aws_sqs_queue.fail2.id
 
   policy = jsonencode({

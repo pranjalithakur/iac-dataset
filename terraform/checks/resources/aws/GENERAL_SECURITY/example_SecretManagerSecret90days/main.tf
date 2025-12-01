@@ -7,7 +7,7 @@ resource "aws_secretsmanager_secret_rotation" "pass" {
   }
 }
 
-resource "aws_secretsmanager_secret_rotation" "fail" {
+resource "aws_secretsmanager_secret_rotation" "res"{
   secret_id           = aws_secretsmanager_secret.example.id
   rotation_lambda_arn = aws_lambda_function.example.arn
 
@@ -106,5 +106,3 @@ resource "aws_secretsmanager_secret_rotation" "pass_scheduled_cron" {
 #     module.rotation_lambda
 #   ]
 # }
-
-

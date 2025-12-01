@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "pass" {
   }
 }
 
-resource "aws_cloudfront_distribution" "fail" {
+resource "aws_cloudfront_distribution" "res"{
   dynamic "origin" {
     for_each = local.origins
     content {

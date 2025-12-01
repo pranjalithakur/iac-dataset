@@ -1,5 +1,5 @@
 
-resource "aws_lb_target_group" "fail" {
+resource "aws_lb_target_group" "res"{
   name     = "tf-example-lb-tg"
   port     = 80
   protocol = "HTTP"
@@ -9,14 +9,14 @@ resource "aws_lb_target_group" "fail" {
   }
 }
 
-resource "aws_lb_target_group" "fail2" {
+resource "aws_lb_target_group" "res2"{
   name     = "tf-example-lb-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 }
 
-resource "aws_lb_target_group" "fail3" {
+resource "aws_lb_target_group" "res3" {
   name     = "tf-example-lb-tg"
   port     = 80
   protocol = "HTTP"

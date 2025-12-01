@@ -7,7 +7,7 @@ resource "aws_ec2_transit_gateway" "pass2" {
   auto_accept_shared_attachments = "disable"
 }
 
-resource "aws_ec2_transit_gateway" "fail" {
+resource "aws_ec2_transit_gateway" "res"{
   description = "sato"
   auto_accept_shared_attachments = "enable"
 }

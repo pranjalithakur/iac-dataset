@@ -1,4 +1,4 @@
-resource "aws_acm_certificate" "res" {
+resource "aws_acm_certificate" "res"{
   domain_name       = "example.com"
   validation_method = "DNS"
 
@@ -11,7 +11,7 @@ resource "aws_acm_certificate" "res" {
   }
 }
 
-resource "aws_acm_certificate" "res2" {
+resource "aws_acm_certificate" "res2"{
   domain_name       = "example.com"
   validation_method = "DNS"
 

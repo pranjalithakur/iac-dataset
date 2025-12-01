@@ -1,4 +1,4 @@
-resource "aws_lambda_function_url" "fail" {
+resource "aws_lambda_function_url" "res"{
   function_name      = aws_lambda_function.test.function_name
   authorization_type = "NONE"
 }

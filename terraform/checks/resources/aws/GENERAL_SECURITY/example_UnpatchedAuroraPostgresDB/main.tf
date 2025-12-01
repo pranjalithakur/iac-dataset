@@ -112,7 +112,7 @@ resource "aws_subnet" "public1" {
   availability_zone = "us-east-1a"
 }
 
-resource "aws_db_instance" "fail2" {
+resource "aws_db_instance" "res2"{
   # Vulnerable Aurora PostgreSQL instance
   allocated_storage = 10
   apply_immediately  = true

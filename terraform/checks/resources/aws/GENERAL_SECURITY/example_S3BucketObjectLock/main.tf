@@ -1,24 +1,5 @@
-# pass
 
-resource "aws_s3_bucket" "enabled_via_object" {
-  bucket = "test-bucket"
-  acl    = "private"
-
-  object_lock_configuration = {
-    object_lock_enabled = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket" "enabled_via_block" {
-  bucket = "test-bucket"
-  acl    = "private"
-
-  object_lock_configuration {
-    object_lock_enabled = "Enabled"
-  }
-}
-
-# failure
+# all
 
 resource "aws_s3_bucket" "disabled_via_object" {
   bucket = "test-bucket"

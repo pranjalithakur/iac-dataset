@@ -1,4 +1,4 @@
-resource "aws_cloudsearch_domain" "fail" {
+resource "aws_cloudsearch_domain" "res"{
   name = "example-domain"
 
   scaling_parameters {
@@ -28,7 +28,7 @@ resource "aws_cloudsearch_domain" "fail" {
     tls_security_policy = "Policy-Min-TLS-1-0-2019-07"
   }
 }
-resource "aws_cloudsearch_domain" "fail2" {
+resource "aws_cloudsearch_domain" "res2"{
   name = "example-domain"
 
   scaling_parameters {

@@ -1,4 +1,4 @@
-resource "aws_efs_access_point" "fail" {
+resource "aws_efs_access_point" "res"{
   file_system_id = aws_efs_file_system.sharedstore.id
   root_directory {
     path=var.root_path

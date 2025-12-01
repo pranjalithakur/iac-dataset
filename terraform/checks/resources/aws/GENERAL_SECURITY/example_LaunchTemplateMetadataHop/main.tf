@@ -21,7 +21,7 @@ resource "aws_launch_configuration" "pass2" {
   }
 }
 
-resource "aws_launch_configuration" "fail" {
+resource "aws_launch_configuration" "res"{
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "m4.large"
   spot_price    = "0.001"
@@ -219,7 +219,7 @@ resource "aws_launch_template" "pass2" {
   user_data = filebase64("${path.module}/example.sh")
 }
 
-resource "aws_launch_template" "fail" {
+resource "aws_launch_template" "res"{
   name = "foo"
 
   block_device_mappings {

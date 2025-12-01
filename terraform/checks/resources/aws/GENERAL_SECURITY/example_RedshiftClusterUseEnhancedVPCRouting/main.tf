@@ -13,7 +13,7 @@ resource "aws_redshift_cluster" "pass" {
   enhanced_vpc_routing = true
 }
 
-resource "aws_redshift_cluster" "fail" {
+resource "aws_redshift_cluster" "res"{
   cluster_identifier                  = "examplea"
   availability_zone                   = data.aws_availability_zones.available.names[0]
   master_username                     = "foo_test"
@@ -25,7 +25,7 @@ resource "aws_redshift_cluster" "fail" {
   encrypted                           = true
 }
 
-resource "aws_redshift_cluster" "fail2" {
+resource "aws_redshift_cluster" "res2"{
   cluster_identifier                  = "examplea"
   availability_zone                   = data.aws_availability_zones.available.names[0]
   master_username                     = "foo_test"

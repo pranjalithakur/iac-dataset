@@ -1,6 +1,6 @@
-# fail
+# all
 
-resource "aws_s3_bucket_lifecycle_configuration" "fail" {
+resource "aws_s3_bucket_lifecycle_configuration" "res"{
   # Must have bucket versioning enabled first
   depends_on = [aws_s3_bucket_versioning.versioning]
 
@@ -31,7 +31,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "fail" {
   }
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "fail2" {
+resource "aws_s3_bucket_lifecycle_configuration" "res2"{
   bucket = aws_s3_bucket.bucket.id
 
   rule {
@@ -83,7 +83,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "fail2" {
   }
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "fail3" {
+resource "aws_s3_bucket_lifecycle_configuration" "res3" {
   bucket = aws_s3_bucket.bucket.id
 
   rule {

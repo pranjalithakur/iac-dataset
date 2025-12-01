@@ -35,7 +35,7 @@ resource "aws_cloudwatch_metric_alarm" "pass2" {
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "fail" {
+resource "aws_cloudwatch_metric_alarm" "res"{
   alarm_name          = "alarmname"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1

@@ -41,7 +41,7 @@ resource "aws_codebuild_project" "pass2" {
 
 # fail
 
-resource "aws_codebuild_project" "fail" {
+resource "aws_codebuild_project" "res"{
   name         = "example"
   service_role = "aws_iam_role.example.arn"
 

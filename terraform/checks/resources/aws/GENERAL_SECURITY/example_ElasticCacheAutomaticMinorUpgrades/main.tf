@@ -18,7 +18,7 @@ resource "aws_elasticache_cluster" "pass2" {
   parameter_group_name = "default.redis6.x"
 }
 
-resource "aws_elasticache_cluster" "fail" {
+resource "aws_elasticache_cluster" "res"{
   cluster_id           = "cluster"
   engine               = "redis"
   node_type            = "cache.m5.large"

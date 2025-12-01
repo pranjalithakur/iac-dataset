@@ -14,7 +14,7 @@ resource "aws_mq_broker" "unknown" {
 }
 
 
-resource "aws_mq_broker" "fail" {
+resource "aws_mq_broker" "res"{
   broker_name = "example"
 
   engine_type         = "ActiveMQ"
@@ -66,7 +66,7 @@ resource "aws_mq_broker" "pass2" {
 }
 
 #no failing major versions yet
-resource "aws_mq_broker" "fail2" {
+resource "aws_mq_broker" "res2"{
   broker_name = "example"
 
   engine_type         = "RabbitMQ"
@@ -83,7 +83,7 @@ resource "aws_mq_broker" "fail2" {
   # publicly_accessible = true
 }
 
-resource "aws_mq_configuration" "fail" {
+resource "aws_mq_configuration" "res"{
   description    = "Example Configuration"
   name           = "example"
   engine_type    = "ActiveMQ"
@@ -118,5 +118,3 @@ resource "aws_mq_configuration" "pass" {
 </broker>
 DATA
 }
-
-

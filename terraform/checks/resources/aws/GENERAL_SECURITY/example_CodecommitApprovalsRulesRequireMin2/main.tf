@@ -1,4 +1,4 @@
-resource "aws_codecommit_approval_rule_template" "fail" {
+resource "aws_codecommit_approval_rule_template" "res"{
   name        = "MyExampleApprovalRuleTemplate"
   description = "This is an example approval rule template"
 

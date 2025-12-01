@@ -22,7 +22,7 @@ resource "aws_rds_cluster" "pass2" {
   preferred_backup_window = "07:00-09:00"
 }
 
-resource "aws_rds_cluster" "fail" {
+resource "aws_rds_cluster" "res"{
   cluster_identifier      = "aurora-cluster-demo"
   availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
   database_name           = "mydb"
@@ -33,7 +33,7 @@ resource "aws_rds_cluster" "fail" {
   preferred_backup_window = "07:00-09:00"
 }
 
-resource "aws_rds_cluster" "fail2" {
+resource "aws_rds_cluster" "res2"{
   cluster_identifier      = "aurora-cluster-demo"
   availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
   database_name           = "mydb"

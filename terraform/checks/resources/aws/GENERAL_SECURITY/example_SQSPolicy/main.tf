@@ -1,5 +1,5 @@
 
-resource "aws_sqs_queue_policy" "fail" {
+resource "aws_sqs_queue_policy" "res"{
   queue_url = aws_sqs_queue.q.id
 
   policy = <<POLICY
@@ -48,4 +48,3 @@ resource "aws_sqs_queue_policy" "pass" {
                     }
                     POLICY
 }
-

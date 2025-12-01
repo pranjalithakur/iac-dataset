@@ -14,14 +14,14 @@ resource "aws_rds_cluster" "pass" {
 
 # fail
 
-resource "aws_db_instance" "fail" {
+resource "aws_db_instance" "res"{
   name           = "name"
   instance_class = "db.t3.micro"
   engine         = "postgres"
   engine_version = "13.2"
 }
 
-resource "aws_rds_cluster" "fail" {
+resource "aws_rds_cluster" "res"{
   engine = "aurora-postgresql"
   engine_version = "11.8"
 }

@@ -12,7 +12,7 @@ resource "aws_redshift_cluster" "pass" {
   kms_key_id                          = aws_kms_key.test.arn
 }
 
-resource "aws_redshift_cluster" "fail" {
+resource "aws_redshift_cluster" "res"{
   cluster_identifier                  = "examplea"
   availability_zone                   = data.aws_availability_zones.available.names[0]
   master_username                     = "foo_test"

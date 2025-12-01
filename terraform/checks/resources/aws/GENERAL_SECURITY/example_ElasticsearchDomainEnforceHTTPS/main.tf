@@ -26,7 +26,7 @@ resource "aws_elasticsearch_domain" "pass2" {
   }
 }
 
-resource "aws_elasticsearch_domain" "fail" {
+resource "aws_elasticsearch_domain" "res"{
   domain_name           = "example"
   elasticsearch_version = "7.10"
 

@@ -1,5 +1,5 @@
 
-resource "aws_db_instance" "fail" {
+resource "aws_db_instance" "res"{
     cluster_identifier      = "aurora-cluster-demo"
     availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
   database_name           = "mydb"
@@ -11,7 +11,7 @@ resource "aws_db_instance" "fail" {
   instance_class            = "m4.large"
 }
 
-resource "aws_db_instance" "fail2" {
+resource "aws_db_instance" "res2"{
     cluster_identifier      = "aurora-cluster-demo"
     availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
     database_name           = "mydb"

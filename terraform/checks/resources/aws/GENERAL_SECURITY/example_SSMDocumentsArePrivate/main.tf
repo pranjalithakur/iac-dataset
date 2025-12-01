@@ -52,7 +52,7 @@ DOC
   }
 }
 
-resource "aws_ssm_document" "fail" {
+resource "aws_ssm_document" "res"{
   name          = "test_document"
   document_type = "Command"
 

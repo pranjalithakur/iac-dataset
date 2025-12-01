@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "pass" {
   }
 }
 
-resource "aws_ecs_task_definition" "fail" {
+resource "aws_ecs_task_definition" "res"{
   family = "service"
   container_definitions = jsonencode([
     {
@@ -86,7 +86,7 @@ resource "aws_ecs_task_definition" "fail" {
   }
 }
 
-resource "aws_ecs_task_definition" "fail2" {
+resource "aws_ecs_task_definition" "res2"{
   family = "service"
   container_definitions = jsonencode([
     {

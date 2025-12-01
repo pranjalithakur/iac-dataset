@@ -1,4 +1,4 @@
-resource "aws_elastic_beanstalk_environment" "fail" {
+resource "aws_elastic_beanstalk_environment" "res"{
   name                   = module.this.id
   application            = var.elastic_beanstalk_application_name
   description            = var.description
@@ -9,7 +9,7 @@ resource "aws_elastic_beanstalk_environment" "fail" {
   tags                   = local.tags
 }
 
-resource "aws_elastic_beanstalk_environment" "fail2" {
+resource "aws_elastic_beanstalk_environment" "res2"{
   name                   = module.this.id
   application            = var.elastic_beanstalk_application_name
   description            = var.description

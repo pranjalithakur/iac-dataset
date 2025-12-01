@@ -9,7 +9,7 @@ resource "aws_db_snapshot" "pass2" {
   shared_accounts=["680235478471"]
 }
 
-resource "aws_db_snapshot" "fail" {
+resource "aws_db_snapshot" "res"{
   db_instance_identifier = aws_db_instance.bar.id
   db_snapshot_identifier = "testsnapshot1234"
   shared_accounts=["all"]

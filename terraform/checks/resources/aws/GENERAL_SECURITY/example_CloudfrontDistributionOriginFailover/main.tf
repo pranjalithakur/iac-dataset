@@ -43,7 +43,7 @@ resource "aws_cloudfront_distribution" "pass" {
   viewer_certificate {}
 }
 
-resource "aws_cloudfront_distribution" "fail" {
+resource "aws_cloudfront_distribution" "res"{
   origin {
     domain_name = aws_s3_bucket.primary.bucket_regional_domain_name
     origin_id   = "myS3Origin"
@@ -80,7 +80,7 @@ resource "aws_cloudfront_distribution" "fail" {
   }
 }
 
-resource "aws_cloudfront_distribution" "fail2" {
+resource "aws_cloudfront_distribution" "res2"{
   origin_group {
     origin_id = "groupS3"
 
@@ -121,7 +121,7 @@ resource "aws_cloudfront_distribution" "fail2" {
   viewer_certificate {}
 }
 
-resource "aws_cloudfront_distribution" "fail3" {
+resource "aws_cloudfront_distribution" "res3" {
   origin_group {
     origin_id = "groupS3"
 

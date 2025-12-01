@@ -1,13 +1,4 @@
-# pass
-
-resource "aws_ecr_repository" "enabled" {
-  name = "example"
-
-  image_tag_mutability = "IMMUTABLE"
-}
-
-#fail
-
+# all
 resource "aws_ecr_repository" "default" {
   name = "example"
 }

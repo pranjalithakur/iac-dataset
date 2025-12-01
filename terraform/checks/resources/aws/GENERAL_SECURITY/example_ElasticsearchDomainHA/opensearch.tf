@@ -1,4 +1,4 @@
-resource "aws_opensearch_domain" "fail" {
+resource "aws_opensearch_domain" "res"{
   domain_name    = "example"
   engine_version = "Elasticsearch_7.10"
 
@@ -31,7 +31,7 @@ resource "aws_opensearch_domain" "pass" {
   }
 }
 
-resource "aws_opensearch_domain" "fail2" {
+resource "aws_opensearch_domain" "res2"{
   domain_name    = "example"
   engine_version = "Elasticsearch_7.10"
 

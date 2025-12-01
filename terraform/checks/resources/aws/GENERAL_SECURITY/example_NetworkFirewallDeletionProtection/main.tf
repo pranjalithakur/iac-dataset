@@ -1,4 +1,4 @@
-resource "aws_networkfirewall_firewall" "fail" {
+resource "aws_networkfirewall_firewall" "res"{
   name                = "example"
   firewall_policy_arn = aws_networkfirewall_firewall_policy.example.arn
   vpc_id              = aws_vpc.example.id
@@ -12,7 +12,7 @@ resource "aws_networkfirewall_firewall" "fail" {
   }
 }
 
-resource "aws_networkfirewall_firewall" "fail2" {
+resource "aws_networkfirewall_firewall" "res2"{
   name                = "example"
   firewall_policy_arn = aws_networkfirewall_firewall_policy.example.arn
   vpc_id              = aws_vpc.example.id

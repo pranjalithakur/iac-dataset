@@ -1,4 +1,4 @@
-resource "aws_api_gateway_rest_api" "res" {
+resource "aws_api_gateway_rest_api" "res"{
   name = "example"
   tags = { test = "Fail" }
   # lifecycle {
@@ -6,7 +6,7 @@ resource "aws_api_gateway_rest_api" "res" {
   # }
 }
 
-resource "aws_api_gateway_rest_api" "res2" {
+resource "aws_api_gateway_rest_api" "res2"{
   name = "example"
   tags = { test = "Fail" }
   lifecycle {

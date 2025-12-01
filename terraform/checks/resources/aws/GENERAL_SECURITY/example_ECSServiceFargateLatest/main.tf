@@ -9,7 +9,7 @@ resource "aws_ecs_service" "pass2" {
   launch_type = "FARGATE"
 }
 
-resource "aws_ecs_service" "fail" {
+resource "aws_ecs_service" "res"{
   name = "pike"
   launch_type = "FARGATE"
   platform_version = "1.4.0"

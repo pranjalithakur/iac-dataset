@@ -1,4 +1,4 @@
-resource "aws_elastic_beanstalk_environment" "fail" {
+resource "aws_elastic_beanstalk_environment" "res"{
   name                   = "beany"
   application            = var.elastic_beanstalk_application_name
   description            = var.description
@@ -9,7 +9,7 @@ resource "aws_elastic_beanstalk_environment" "fail" {
   tags                   = local.tags
 }
 
-resource "aws_elastic_beanstalk_environment" "fail2" {
+resource "aws_elastic_beanstalk_environment" "res2"{
   name                   = "beany"
   application            = var.elastic_beanstalk_application_name
   description            = var.description
@@ -25,7 +25,7 @@ resource "aws_elastic_beanstalk_environment" "fail2" {
   }
 }
 
-resource "aws_elastic_beanstalk_environment" "fail3" {
+resource "aws_elastic_beanstalk_environment" "res3" {
   name                   = "beany"
   application            = var.elastic_beanstalk_application_name
   description            = var.description
@@ -47,7 +47,7 @@ resource "aws_elastic_beanstalk_environment" "fail3" {
   }
 }
 
-resource "aws_elastic_beanstalk_environment" "fail4" {
+resource "aws_elastic_beanstalk_environment" "res4" {
   name                   = "beany"
   application            = var.elastic_beanstalk_application_name
   description            = var.description

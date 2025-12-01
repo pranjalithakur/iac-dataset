@@ -1,4 +1,4 @@
-resource "aws_rds_cluster" "fail" {
+resource "aws_rds_cluster" "res"{
   cluster_identifier        = "example"
   availability_zones        = ["us-west-2a", "us-west-2b", "us-west-2c"]
   engine                    = "mysql"
@@ -10,7 +10,7 @@ resource "aws_rds_cluster" "fail" {
   master_password           = "mustbeeightcharaters"  # checkov:skip=CKV_SECRET_6 test secret
 }
 
-resource "aws_rds_cluster" "fail2" {
+resource "aws_rds_cluster" "res2"{
   cluster_identifier        = "example"
   availability_zones        = ["us-west-2a", "us-west-2b", "us-west-2c"]
   engine                    = "mysql"

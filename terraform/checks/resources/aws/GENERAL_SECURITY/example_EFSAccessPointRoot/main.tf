@@ -10,7 +10,7 @@ variable "root_path" {
     default = "/data"
 }
 
-resource "aws_efs_access_point" "fail" {
+resource "aws_efs_access_point" "res"{
   file_system_id = aws_efs_file_system.sharedstore.id
   root_directory {
     path="/"
@@ -18,6 +18,6 @@ resource "aws_efs_access_point" "fail" {
 }
 
 
-resource "aws_efs_access_point" "fail2" {
+resource "aws_efs_access_point" "res2"{
   file_system_id = aws_efs_file_system.sharedstore.id
 }
