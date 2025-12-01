@@ -1,17 +1,4 @@
-resource "aws_acm_certificate" "pass" {
-  domain_name       = "example.com"
-  validation_method = "DNS"
-
-  tags = {
-    Environment = "test"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_acm_certificate" "fail" {
+resource "aws_acm_certificate" "res" {
   domain_name       = "example.com"
   validation_method = "DNS"
 
@@ -24,7 +11,7 @@ resource "aws_acm_certificate" "fail" {
   }
 }
 
-resource "aws_acm_certificate" "fail2" {
+resource "aws_acm_certificate" "res2" {
   domain_name       = "example.com"
   validation_method = "DNS"
 

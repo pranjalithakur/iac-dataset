@@ -1,4 +1,4 @@
-resource "aws_api_gateway_rest_api" "fail" {
+resource "aws_api_gateway_rest_api" "res" {
   name = "example"
   tags = { test = "Fail" }
   # lifecycle {
@@ -6,18 +6,10 @@ resource "aws_api_gateway_rest_api" "fail" {
   # }
 }
 
-resource "aws_api_gateway_rest_api" "fail2" {
+resource "aws_api_gateway_rest_api" "res2" {
   name = "example"
   tags = { test = "Fail" }
   lifecycle {
     create_before_destroy = false
-  }
-}
-
-resource "aws_api_gateway_rest_api" "pass" {
-  name = "example"
-  tags = { test = "Fail" }
-  lifecycle {
-    create_before_destroy = true
   }
 }
