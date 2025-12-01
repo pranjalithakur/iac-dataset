@@ -1,0 +1,3504 @@
+[
+	{
+		"id": "a0b6a665-f827-43a2-96f3-4014e75d6667",
+		"created_at": "2025-12-01 05:42:45.159857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ECR repository allows mutable image tags by default",
+		"severity": "MEDIUM",
+		"description": "The aws_ecr_repository resource \"default\" does not specify an `image_tag_mutability` setting. By default, AWS ECR uses `MUTABLE`, allowing tags to be overwritten. This can enable an attacker with push privileges to swap images under an existing tag, leading to supply chain compromise.",
+		"recommendation": "Explicitly set `image_tag_mutability = \"IMMUTABLE\"` in the aws_ecr_repository resource to prevent tag overwrites.",
+		"impacted_code": "resource \"aws_ecr_repository\" \"default\" {\n  name = \"example\"\n}",
+		"file_id": "1afe2036-4ee4-4b1d-8cf9-3ca0aca4c828",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:45.159857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 4,
+				"side": ""
+			},
+			"start_location": {
+				"line": 2,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "cab37ff3-4c20-46a1-a976-f066ec142184",
+		"created_at": "2025-12-01 05:42:45.159857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ECR repository explicitly configured with mutable image tags",
+		"severity": "MEDIUM",
+		"description": "The aws_ecr_repository resource \"disabled\" sets `image_tag_mutability = \"MUTABLE\"`, allowing tags to be overwritten. This configuration permits replacing images under existing tags, risking deployment of untrusted or malicious images.",
+		"recommendation": "Change `image_tag_mutability` to `\"IMMUTABLE\"` to enforce tag immutability and prevent unauthorized image replacement.",
+		"impacted_code": "resource \"aws_ecr_repository\" \"disabled\" {\n  name = \"example\"\n\n  image_tag_mutability = \"MUTABLE\"\n}",
+		"file_id": "1afe2036-4ee4-4b1d-8cf9-3ca0aca4c828",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:45.159857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 6,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "cc9a43c6-42dc-41a1-b70d-81eb0577f755",
+		"created_at": "2025-12-01 05:42:45.782604+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "EFS access point without POSIX user configuration",
+		"severity": "MEDIUM",
+		"description": "The aws_efs_access_point resource \"res\" does not specify a posix_user block. When posix_user is omitted, the access point defaults to the root user (UID 0, GID 0), granting clients root-level access to the EFS. This is a security misconfiguration that can allow unauthorized full control over file system data.",
+		"recommendation": "Define a posix_user block with a non-root UID and GID that follow the principle of least privilege. For example, use an application-specific user and group instead of UID 0/GID 0.",
+		"impacted_code": "resource \"aws_efs_access_point\" \"res\"{\n  file_system_id = aws_efs_file_system.sharedstore.id\n  root_directory {\n    path=var.root_path\n  }\n}",
+		"file_id": "213c3c48-da41-4bbf-9195-5725d20a1135",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:45.782604",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 6,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "cfdc5c67-e40d-4c88-b085-63b6eb27d01b",
+		"created_at": "2025-12-01 05:42:45.782604+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "EFS access point explicitly uses root POSIX user",
+		"severity": "MEDIUM",
+		"description": "The aws_efs_access_point resource \"pass\" defines a posix_user with UID 0 and GID 0, granting root privileges to any client mounting this access point. This undermines filesystem access controls and increases risk of privilege escalation.",
+		"recommendation": "Use a non-root POSIX user and group with only the permissions required by the application. Avoid setting UID or GID to 0.",
+		"impacted_code": "resource \"aws_efs_access_point\" \"pass\" {\n  file_system_id = aws_efs_file_system.sharedstore.id\n  root_directory {\n    path=var.root_path\n  }\n  posix_user {\n    gid = 0\n    uid = 0\n  }\n}",
+		"file_id": "213c3c48-da41-4bbf-9195-5725d20a1135",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:45.782604",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 22,
+				"side": ""
+			},
+			"start_location": {
+				"line": 13,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "e9b31e78-030a-4b2e-9d6b-d25beaffaf03",
+		"created_at": "2025-12-01 05:42:46.047742+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Weak TLS 1.0 policy on API Gateway domain",
+		"severity": "MEDIUM",
+		"description": "The aws_api_gateway_domain_name resource is configured with security_policy = \"TLS_1_0\", which allows only TLS 1.0 for connections. TLS 1.0 is deprecated and vulnerable to multiple cryptographic attacks (e.g., POODLE, BEAST, downgrade attacks), weakening the confidentiality and integrity of data in transit.",
+		"recommendation": "Update the security_policy to \"TLS_1_2\" to enforce TLS 1.2 and ensure strong encryption for API Gateway domain connections.",
+		"impacted_code": "security_policy = \"TLS_1_0\"",
+		"file_id": "b5b024da-6a71-46fe-92fa-931bb0e47626",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:46.047742",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 6,
+				"side": ""
+			},
+			"start_location": {
+				"line": 6,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "018422c2-d0d3-45ce-8f13-4519b682b09b",
+		"created_at": "2025-12-01 05:42:46.245356+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Privileged container with host PID namespace",
+		"severity": "HIGH",
+		"description": "The ECS task definition \"res\" enables a container to run in privileged mode and share the host PID namespace (pidMode = \"host\"), allowing it to view and interact with host processes. This configuration can be exploited by a compromised container to escalate privileges on the host, manipulate or terminate host processes, and compromise the underlying infrastructure.",
+		"recommendation": "Remove the privileged setting and avoid using the host PID namespace. Use least-privilege principles: omit `privilege = true` and set `pidMode` to `task` (or leave default) so containers cannot see or interfere with host processes.",
+		"impacted_code": "privilege = true\npidMode   = \"host\"",
+		"file_id": "f92ba7e0-e22d-4541-8727-2844fca97847",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:46.245356",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 110,
+				"side": ""
+			},
+			"start_location": {
+				"line": 108,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "eb81b9b3-c652-4039-8b1f-78bda926a09a",
+		"created_at": "2025-12-01 05:43:32.435822+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Second container is privileged with host PID mode",
+		"severity": "HIGH",
+		"description": "The second container in aws_ecs_task_definition.res2 is configured with privilege = true, pidMode = \"host\", and readonlyRootFilesystem = false. Running a container in privileged mode with host PID access allows processes inside the container to interact with host processes and kernel interfaces, creating a risk of container escape and host compromise.",
+		"recommendation": "Remove privilege = true and pidMode = \"host\", and enforce readonlyRootFilesystem = true. Only enable privileged mode or host PID when absolutely necessary and with proper isolation.",
+		"impacted_code": "{\n  name      = \"second\"\n  image     = \"service-second\"\n  cpu       = 10\n  memory    = 256\n  essential = true\n  privilege = true\n  pidMode = \"host\"\n  readonlyRootFilesystem = false\n  portMappings = [\n    {\n      containerPort = 443\n      hostPort      = 443\n    }\n  ]\n}",
+		"file_id": "c84e527f-425e-47a4-a0e2-847192f87118",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.435822",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 120,
+				"side": ""
+			},
+			"start_location": {
+				"line": 107,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "fe2c93df-f52d-4994-b35e-264b419cc635",
+		"created_at": "2025-12-01 05:43:34.367908+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded Redshift master password in Terraform",
+		"severity": "MEDIUM",
+		"description": "The aws_redshift_cluster resource \"pass\" defines a hard-coded master_password in plaintext. This secret may be exposed in version control, allowing attackers with repository access to obtain full administrative credentials for the Redshift cluster.",
+		"recommendation": "Avoid embedding plaintext credentials in Terraform code. Use Terraform variables (populated via environment variables), or integrate with a secure secrets manager such as AWS Secrets Manager or HashiCorp Vault.",
+		"impacted_code": "master_password = \"Mustbe8characters\"",
+		"file_id": "3b90a1ac-1666-41ab-aee7-8a412bf1ac22",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:34.367908",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 6,
+				"side": ""
+			},
+			"start_location": {
+				"line": 6,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "3a7cf165-2ecb-46f0-927b-02c07aad87e7",
+		"created_at": "2025-12-01 05:43:34.367908+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded Redshift master password in Terraform",
+		"severity": "MEDIUM",
+		"description": "The aws_redshift_cluster resource \"res\" defines a hard-coded master_password in plaintext. This secret may be exposed in version control, allowing attackers with repository access to obtain full administrative credentials for the Redshift cluster.",
+		"recommendation": "Avoid embedding plaintext credentials in Terraform code. Use Terraform variables (populated via environment variables), or integrate with a secure secrets manager such as AWS Secrets Manager or HashiCorp Vault.",
+		"impacted_code": "master_password = \"Mustbe8characters\"",
+		"file_id": "3b90a1ac-1666-41ab-aee7-8a412bf1ac22",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:34.367908",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 19,
+				"side": ""
+			},
+			"start_location": {
+				"line": 19,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "c6373217-8d21-489d-a07d-588ed9c6398b",
+		"created_at": "2025-12-01 05:43:34.45829+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hard-coded RDS master password in Terraform",
+		"severity": "MEDIUM",
+		"description": "The Terraform configuration contains hard-coded master_password values (e.g., \"bar\") for AWS RDS cluster resources. Storing database credentials in source code can expose them in version control systems, risking unauthorized access to your database.",
+		"recommendation": "Remove hard-coded passwords from Terraform code. Use Terraform input variables or integrate with a secrets manager (e.g., AWS Secrets Manager or HashiCorp Vault) and reference the secret via data sources or environment variables.",
+		"impacted_code": "resource \"aws_rds_cluster\" \"pass\" {\n  master_password = \"bar\"\n}\n\n# (Repeated in other aws_rds_cluster resources)",
+		"file_id": "b5e80894-cf67-4b09-8eb1-de1c7ebb1f25",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:34.45829",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 8,
+				"side": ""
+			},
+			"start_location": {
+				"line": 7,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "063b469d-b6d3-4061-adab-97a48eef6be9",
+		"created_at": "2025-12-01 05:43:34.45829+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Aurora MySQL cluster backtrack misconfigured",
+		"severity": "MEDIUM",
+		"description": "Two of the defined aws_rds_cluster resources either disable backtracking (backtrack_window = 0) or omit the backtrack_window entirely. Aurora MySQL clusters require backtrack enabled (backtrack_window > 0) to allow fast point-in-time recovery and mitigate accidental or malicious data changes.",
+		"recommendation": "For Aurora MySQL clusters, set backtrack_window to a positive value (for example, 1 or greater) to enable backtrack. For any clusters relying on default engine settings, explicitly specify engine = \"aurora-mysql\" and backtrack_window in the resource definition.",
+		"impacted_code": "resource \"aws_rds_cluster\" \"res\" {\n  backtrack_window = 0\n}\n\nresource \"aws_rds_cluster\" \"res2\" {\n  # backtrack_window not configured\n}",
+		"file_id": "b5e80894-cf67-4b09-8eb1-de1c7ebb1f25",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:34.45829",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 44,
+				"side": ""
+			},
+			"start_location": {
+				"line": 25,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "29c6b934-36b2-4f66-9f6d-5335642717c9",
+		"created_at": "2025-12-01 05:43:04.586261+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Wildcard Principal Permits All SQS Actions",
+		"severity": "HIGH",
+		"description": "The SQS queue policy resource ‘aws_sqs_queue_policy.res2’ grants the wildcard principal (“*”) permission to perform all SQS actions (Action = \"*\") on the queue. This allows any AWS principal to perform destructive operations—such as receiving, deleting, or purging messages—and to view or modify queue attributes, leading to potential data loss and unauthorized access.",
+		"recommendation": "Restrict the Principal to only the necessary IAM entities and limit the Action to the specific operations required (e.g., “sqs:SendMessage”). Avoid using “*” for Action or Principal in queue policies.",
+		"impacted_code": "resource \"aws_sqs_queue_policy\" \"res2\" {\n  queue_url = aws_sqs_queue.res2.id\n\n  policy = jsonencode({\n    Version = \"2012-10-17\",\n    Id = \"AllowAllSendMessage\",\n    Statement = [\n      {\n        Effect = \"Allow\",\n        Principal = \"*\",\n        Action = \"*\",\n        Resource = aws_sqs_queue.res.arn\n      }\n    ]\n  })\n}",
+		"file_id": "5aeb7b3b-50f3-43fc-a307-efa3fc67dace",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:04.586261",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 42,
+				"side": ""
+			},
+			"start_location": {
+				"line": 27,
+				"side": ""
+			}
+		},
+		"category": "Broken Access Control"
+	},
+	{
+		"id": "a8c5778b-ec99-47bc-b722-e8a0f9ec3b8e",
+		"created_at": "2025-12-01 05:43:05.226805+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing CloudFront security headers configuration block",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_cloudfront_response_headers_policy \"no_security_headers_config\" does not define any security_headers_config block. Without this block, CloudFront will not include recommended security headers such as Strict-Transport-Security (HSTS), leaving clients vulnerable to protocol downgrade and unencrypted traffic.",
+		"recommendation": "Add a security_headers_config block to the aws_cloudfront_response_headers_policy resource and configure strict_transport_security with appropriate values (e.g., access_control_max_age_sec ≥ 31536000, include_subdomains = true, preload = true).",
+		"impacted_code": "resource \"aws_cloudfront_response_headers_policy\" \"no_security_headers_config\" {\n  name    = \"test\"\n}",
+		"file_id": "ae1870ee-9d53-48b1-85e1-52b2f8398158",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:05.226805",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 5,
+				"side": ""
+			},
+			"start_location": {
+				"line": 3,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "856bc8b6-8efa-4074-8395-85e9b2ee34d3",
+		"created_at": "2025-12-01 05:43:05.226805+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing CloudFront HSTS configuration block",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_cloudfront_response_headers_policy \"no_strict_transport_security\" defines a security_headers_config block but omits the strict_transport_security block. As a result, no HSTS header will be applied in responses, allowing clients to fall back to HTTP and risking downgrade attacks.",
+		"recommendation": "Within the security_headers_config block, add a strict_transport_security block with recommended settings (e.g., access_control_max_age_sec = 31536000, include_subdomains = true, preload = true, override = true).",
+		"impacted_code": "resource \"aws_cloudfront_response_headers_policy\" \"no_strict_transport_security\" {\n  name    = \"test\"\n\n  security_headers_config {\n    content_type_options {\n      override = true\n    }\n    # Missing strict_transport_security block here\n  }\n}",
+		"file_id": "ae1870ee-9d53-48b1-85e1-52b2f8398158",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:05.226805",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 15,
+				"side": ""
+			},
+			"start_location": {
+				"line": 7,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "e34b4f78-6fd8-42d2-bddc-1051ece0074e",
+		"created_at": "2025-12-01 05:43:05.226805+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Inadequate HSTS max-age configuration",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_cloudfront_response_headers_policy \"incorrect_strict_transport_security\" sets access_control_max_age_sec = 1 second in its strict_transport_security block. Such a low max-age does not enforce HSTS effectively, as browsers will discard the header almost immediately. Additionally, HSTS preload requirements mandate a minimum max-age of 31536000 seconds.",
+		"recommendation": "Increase access_control_max_age_sec to at least 31536000 seconds (1 year), and ensure include_subdomains, preload, and override are set to true.",
+		"impacted_code": "security_headers_config {\n  strict_transport_security {\n    access_control_max_age_sec = 1\n    include_subdomains         = true\n    override                   = true\n    preload                    = true\n  }\n}",
+		"file_id": "ae1870ee-9d53-48b1-85e1-52b2f8398158",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:05.226805",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 25,
+				"side": ""
+			},
+			"start_location": {
+				"line": 21,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "e7857e3b-45fe-4bdc-b8d5-4acc58e5d50c",
+		"created_at": "2025-12-01 05:43:05.493872+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Privileged container enabled in job definition",
+		"severity": "HIGH",
+		"description": "The aws_batch_job_definition resource 'res' defines container_properties with \"privileged\": true. Enabling privileged mode grants containers extended privileges on the host, increasing the risk of container escape and host compromise. AWS Batch job definitions should not run in privileged mode unless absolutely necessary.",
+		"recommendation": "Set `privileged` to `false` or remove the `privileged` attribute from `container_properties` to disable privileged mode.",
+		"impacted_code": "\"privileged\": true",
+		"file_id": "bce02d61-32dd-402b-bbd9-7a1f685dfa07",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:05.493872",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 18,
+				"side": ""
+			},
+			"start_location": {
+				"line": 18,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "b868b514-85dc-4085-8f65-f8c3557ffc78",
+		"created_at": "2025-12-01 05:43:06.351689+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Transit Gateway auto accept attachments enabled",
+		"severity": "HIGH",
+		"description": "The aws_ec2_transit_gateway resource has auto_accept_shared_attachments set to \"enable\", which automatically accepts shared attachments from any AWS account. This can lead to unintended cross-account resource attachments, data exfiltration, or elevation of privileges if a malicious account shares a route table or VPC attachment.",
+		"recommendation": "Set auto_accept_shared_attachments to \"disable\" (the default) or remove the property to rely on the default of \"disable\", and manually accept only trusted attachments.",
+		"impacted_code": "resource \"aws_ec2_transit_gateway\" \"res\"{\n  description = \"sato\"\n  auto_accept_shared_attachments = \"enable\"\n}",
+		"file_id": "b5ec5922-2e58-400b-b3fd-3b9d2a9f491b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:06.351689",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 13,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "9357c544-efbc-4c47-ae1e-a6f78c8fcc32",
+		"created_at": "2025-12-01 05:43:06.508724+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Publicly shared RDS DB snapshot",
+		"severity": "HIGH",
+		"description": "The aws_db_snapshot resource “res” is configured with shared_accounts = [\"all\"] (lines 15), which shares the snapshot publicly with every AWS account. This exposes potentially sensitive database contents to unauthorized parties, allowing anyone to copy or restore the snapshot.",
+		"recommendation": "Remove the public sharing by deleting the \"all\" entry from shared_accounts. If sharing is required, specify only specific AWS account IDs or omit the shared_accounts attribute entirely to keep snapshots private.",
+		"impacted_code": "resource \"aws_db_snapshot\" \"res\"{\n  db_instance_identifier = aws_db_instance.bar.id\n  db_snapshot_identifier = \"testsnapshot1234\"\n  shared_accounts=[\"all\"]\n}",
+		"file_id": "91a6808e-4876-4097-9b4f-c1bba1650149",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:06.508724",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 16,
+				"side": ""
+			},
+			"start_location": {
+				"line": 12,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "9cc4a46a-1562-4f23-a01f-bc1abb6dac28",
+		"created_at": "2025-12-01 05:43:07.36817+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing create_before_destroy on API Gateway resource",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_api_gateway_rest_api.res does not specify lifecycle.create_before_destroy. Without create_before_destroy = true, Terraform will destroy the existing API Gateway before creating the replacement, causing service downtime and a potential denial-of-service during updates.",
+		"recommendation": "Add a lifecycle block with create_before_destroy = true to ensure the new API Gateway is created before the old one is destroyed.",
+		"impacted_code": "resource \"aws_api_gateway_rest_api\" \"res\"{\n  name = \"example\"\n  tags = { test = \"Fail\" }\n  # lifecycle {\n  #   create_before_destroy=true\n  # }\n}",
+		"file_id": "d590948e-b673-496d-9115-8108f714daff",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:07.36817",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 7,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "46f7fa10-0584-45b2-a0ca-960dc41933ec",
+		"created_at": "2025-12-01 05:43:07.36817+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "create_before_destroy explicitly disabled for API Gateway",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_api_gateway_rest_api.res2 explicitly sets lifecycle.create_before_destroy = false. This disables create-before-destroy behavior and can lead to downtime when Terraform replaces the API Gateway resource.",
+		"recommendation": "Set lifecycle.create_before_destroy = true (or remove the explicit false) to ensure zero-downtime replacement of the API Gateway.",
+		"impacted_code": "resource \"aws_api_gateway_rest_api\" \"res2\"{\n  name = \"example\"\n  tags = { test = \"Fail\" }\n  lifecycle {\n    create_before_destroy = false\n  }\n}",
+		"file_id": "d590948e-b673-496d-9115-8108f714daff",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:07.36817",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 15,
+				"side": ""
+			},
+			"start_location": {
+				"line": 9,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "85845b46-cc04-4025-af51-8f67fee7b547",
+		"created_at": "2025-12-01 05:43:10.446621+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Insecure ActiveMQ engine version used",
+		"severity": "MEDIUM",
+		"description": "The aws_mq_broker resource \"res\" is configured with engine_version = \"5.15.0\", which is known to contain multiple critical vulnerabilities (CVE-2018-8034, CVE-2016-3088, etc.). Running an outdated broker version can lead to remote code execution, information leakage, or denial of service.",
+		"recommendation": "Upgrade the engine_version to a patched release (for example, 5.17.6 or later) and enable automatic minor version upgrades.",
+		"impacted_code": "resource \"aws_mq_broker\" \"res\" {\n  engine_version      = \"5.15.0\"\n}",
+		"file_id": "daac8383-59f9-40eb-9480-240725882d9b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:10.446621",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 32,
+				"side": ""
+			},
+			"start_location": {
+				"line": 17,
+				"side": ""
+			}
+		},
+		"category": "Using Components with Known Vulnerabilities"
+	},
+	{
+		"id": "d298baf6-57e3-4382-ae28-e79843a461c3",
+		"created_at": "2025-12-01 05:43:10.446621+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Insecure RabbitMQ engine version used",
+		"severity": "MEDIUM",
+		"description": "The aws_mq_broker resource \"res2\" is configured with engine_version = \"3.7.6\" for RabbitMQ, which contains known security flaws (including CVE-2019-20979 and CVE-2020-12604). These vulnerabilities can allow remote attackers to bypass authentication or cause denial of service.",
+		"recommendation": "Upgrade the engine_version to a secure, maintained RabbitMQ release (for example, 3.11.x or later) and enable automatic minor version upgrades.",
+		"impacted_code": "resource \"aws_mq_broker\" \"res2\" {\n  engine_type         = \"RabbitMQ\"\n  engine_version      = \"3.7.6\"\n}",
+		"file_id": "daac8383-59f9-40eb-9480-240725882d9b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:10.446621",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 84,
+				"side": ""
+			},
+			"start_location": {
+				"line": 69,
+				"side": ""
+			}
+		},
+		"category": "Using Components with Known Vulnerabilities"
+	},
+	{
+		"id": "8c8776d4-f5ba-4c79-83f3-44c331045944",
+		"created_at": "2025-12-01 05:43:10.446621+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hard-coded broker credentials in Terraform",
+		"severity": "MEDIUM",
+		"description": "The aws_mq_broker resources contain plaintext credentials (password = \"MindTheGapps\") directly in the Terraform configuration. Storing secrets in source code can lead to leaked credentials if the repository is compromised or shared.",
+		"recommendation": "Remove hard-coded passwords. Use Terraform variables, encrypted storage (e.g., AWS Secrets Manager), or environment variables to manage sensitive data securely.",
+		"impacted_code": "user {\n  username = \"ExampleUser\"\n  password = \"MindTheGapps\"\n}",
+		"file_id": "daac8383-59f9-40eb-9480-240725882d9b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:10.446621",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 13,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "a7dcfe9e-a305-4722-88a1-b97d8702d608",
+		"created_at": "2025-12-01 05:43:10.446621+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "MQ broker publicly accessible",
+		"severity": "MEDIUM",
+		"description": "All aws_mq_broker resources are configured with publicly_accessible = true, making the message brokers reachable over the public internet without network restrictions. This increases the attack surface and exposes sensitive message data.",
+		"recommendation": "Set publicly_accessible = false or restrict access via VPC, security groups, or private endpoints to ensure brokers are not exposed to unauthorized networks.",
+		"impacted_code": "publicly_accessible = true",
+		"file_id": "daac8383-59f9-40eb-9480-240725882d9b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:10.446621",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 7,
+				"side": ""
+			},
+			"start_location": {
+				"line": 7,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "66e8a8e4-f9cc-4741-b920-4c3aed14dada",
+		"created_at": "2025-12-01 05:43:21.443994+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded AWS RDS master_password in Terraform code",
+		"severity": "HIGH",
+		"description": "The Terraform configuration for the aws_rds_cluster resource embeds the master_password value directly in code. Hardcoding database credentials in infrastructure-as-code can lead to leakage if the repository is shared or compromised, and complicates credential rotation and auditing.",
+		"recommendation": "Remove the hardcoded password from the Terraform file. Store and manage the RDS master password in a secure secret store such as AWS Secrets Manager or SSM Parameter Store, and reference it via a data source or input variable.",
+		"impacted_code": "master_password           = \"mustbeeightcharaters\"",
+		"file_id": "49e1a7a1-4a10-46c8-868d-d92dcf056635",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.443994",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 35,
+				"side": ""
+			},
+			"start_location": {
+				"line": 35,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "916a4348-f52b-4de5-a33d-28ef26d41e41",
+		"created_at": "2025-12-01 05:43:21.443994+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing copy_tags_to_snapshot on Terraform RDS cluster",
+		"severity": "LOW",
+		"description": "The aws_rds_cluster resource defined in this Terraform file does not specify the copy_tags_to_snapshot attribute, defaulting to false. Without this setting enabled, tags applied to the cluster will not be propagated to snapshots, hindering tagging consistency, auditing, and cost attribution.",
+		"recommendation": "Explicitly set copy_tags_to_snapshot = true in your aws_rds_cluster resource to ensure that all tags are retained on snapshots for auditing and cost tracking.",
+		"impacted_code": "resource \"aws_rds_cluster\" \"res\" {\n  ...\n  // no copy_tags_to_snapshot defined, default is false\n}",
+		"file_id": "49e1a7a1-4a10-46c8-868d-d92dcf056635",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.443994",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 11,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "fe8763c2-b159-4b90-a216-18c8dd1cc2f9",
+		"created_at": "2025-12-01 05:43:21.443994+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Disabled copy_tags_to_snapshot on Terraform RDS cluster",
+		"severity": "LOW",
+		"description": "The aws_rds_cluster resource has copy_tags_to_snapshot explicitly set to false. This prevents tags from being copied to snapshots, which can break tagging policies and complicate resource tracking and auditing.",
+		"recommendation": "Change copy_tags_to_snapshot = false to copy_tags_to_snapshot = true to maintain tag consistency on snapshots.",
+		"impacted_code": "copy_tags_to_snapshot = false",
+		"file_id": "49e1a7a1-4a10-46c8-868d-d92dcf056635",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.443994",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 23,
+				"side": ""
+			},
+			"start_location": {
+				"line": 23,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "318a49df-5c21-4fcb-966d-98cdc80ed4f3",
+		"created_at": "2025-12-01 05:43:22.100269+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch Domain missing HTTPS enforcement",
+		"severity": "HIGH",
+		"description": "The aws_elasticsearch_domain resource \"pass\" does not define a domain_endpoint_options block with enforce_https enabled. By default, HTTP access remains allowed, exposing the Elasticsearch endpoint to unencrypted traffic and risking data interception or man-in-the-middle attacks.",
+		"recommendation": "Add a domain_endpoint_options block with enforce_https = true to enforce HTTPS-only access for the Elasticsearch domain.",
+		"impacted_code": "resource \"aws_elasticsearch_domain\" \"pass\" {\n  domain_name           = \"example\"\n  elasticsearch_version = \"7.10\"\n\n  cluster_config {\n    instance_type = \"r4.large.elasticsearch\"\n  }\n\n  tags = {\n    Domain = \"TestDomain\"\n  }\n}",
+		"file_id": "7d65d0b6-fc62-4695-87c7-ce2832480786",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:22.100269",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 12,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "44ed5c70-9129-493a-8871-4469c0c1664a",
+		"created_at": "2025-12-01 05:43:22.100269+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch Domain enforce_https disabled",
+		"severity": "HIGH",
+		"description": "The aws_elasticsearch_domain resource \"res\" explicitly sets domain_endpoint_options.enforce_https to false, allowing HTTP access to the domain endpoint. This disables encryption in transit and exposes data to potential eavesdropping.",
+		"recommendation": "Change enforce_https to true in the domain_endpoint_options block to enforce HTTPS-only communication.",
+		"impacted_code": "domain_endpoint_options {\n    enforce_https = false\n}",
+		"file_id": "7d65d0b6-fc62-4695-87c7-ce2832480786",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:22.100269",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 38,
+				"side": ""
+			},
+			"start_location": {
+				"line": 36,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "ec323eb4-e7e1-4703-ab9e-e79eb1f961d9",
+		"created_at": "2025-12-01 05:43:24.275236+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Launch configuration hop limit misconfigured",
+		"severity": "MEDIUM",
+		"description": "The aws_launch_configuration \"res\" resource (lines 24-35) sets metadata_options.http_put_response_hop_limit = 2. Allowing a hop limit greater than 1 increases the risk that an application or container on the instance could perform SSRF to the Instance Metadata Service through proxies or additional network hops. Best practice is to restrict the hop limit to 1 to limit access to IMDS.",
+		"recommendation": "Set metadata_options.http_put_response_hop_limit to 1 in the aws_launch_configuration resource to restrict IMDS access to a single network hop.",
+		"impacted_code": "resource \"aws_launch_configuration\" \"res\"{\n  ...\n  metadata_options {\n    http_put_response_hop_limit = 2\n  }\n}",
+		"file_id": "73034507-2d8a-418d-952a-fe17fdfdb9a0",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.275236",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 35,
+				"side": ""
+			},
+			"start_location": {
+				"line": 24,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "663fbae9-2b61-4187-a0e1-d589a217b8fc",
+		"created_at": "2025-12-01 05:43:24.275236+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Launch template hop limit misconfigured",
+		"severity": "MEDIUM",
+		"description": "The aws_launch_template \"res\" resource (lines 222-313) configures metadata_options.http_put_response_hop_limit = 2. A hop limit greater than 1 allows chained or proxied requests to the Instance Metadata Service, increasing SSRF attack surface. Limiting the hop count to 1 reduces this risk.",
+		"recommendation": "Configure metadata_options.http_put_response_hop_limit = 1 in the aws_launch_template resource to enforce a single-hop limit for IMDS requests.",
+		"impacted_code": "resource \"aws_launch_template\" \"res\"{\n  ...\n  metadata_options {\n    http_endpoint               = \"enabled\"\n    http_tokens                 = \"required\"\n    http_put_response_hop_limit = 2\n    instance_metadata_tags      = \"enabled\"\n  }\n}",
+		"file_id": "73034507-2d8a-418d-952a-fe17fdfdb9a0",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.275236",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 286,
+				"side": ""
+			},
+			"start_location": {
+				"line": 281,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "6d7610db-b8db-4733-a3df-ea6149515b33",
+		"created_at": "2025-12-01 05:43:24.882253+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch domain 'res' lacks high availability configuration",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain.res resource defines a single node cluster without dedicated master nodes or zone awareness. Without dedicated masters and multi-AZ (zone awareness) enabled, the cluster is a single point of failure and cannot tolerate node or Availability Zone outages.",
+		"recommendation": "In the cluster_config block, set dedicated_master_count to at least 3 and enable zone awareness by adding zone_awareness_enabled = true to ensure multi-AZ redundancy.",
+		"impacted_code": "cluster_config {\n  instance_type = \"r4.large.search\"\n}",
+		"file_id": "1973511c-a1ea-4749-8fdc-4aed830e2727",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.882253",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 7,
+				"side": ""
+			},
+			"start_location": {
+				"line": 5,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "ac4414ed-af5a-4a20-abeb-065054a10795",
+		"created_at": "2025-12-01 05:43:24.882253+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch domain 'res' has no log publishing configured",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain.res resource does not include a log_publishing_options block. As a result, slow logs (e.g., INDEX_SLOW_LOGS, SEARCH_SLOW_LOGS) are not delivered to CloudWatch, hindering monitoring and forensic capabilities.",
+		"recommendation": "Add a log_publishing_options block under the resource, specify the CloudWatch Log Group ARN, set the desired log_type(s), and ensure enabled = true.",
+		"impacted_code": "tags = {\n  Domain = \"TestDomain\"\n}",
+		"file_id": "1973511c-a1ea-4749-8fdc-4aed830e2727",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.882253",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 11,
+				"side": ""
+			},
+			"start_location": {
+				"line": 9,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "8d508003-f261-4b58-8df7-68d6cde88c23",
+		"created_at": "2025-12-01 05:43:24.882253+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch domain 'res2' missing zone awareness",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain.res2 resource defines dedicated master nodes but does not set zone_awareness_enabled. By default, zone awareness is disabled, which places all nodes in a single AZ and risks downtime if that AZ fails.",
+		"recommendation": "In the cluster_config block, add zone_awareness_enabled = true to distribute nodes across multiple Availability Zones.",
+		"impacted_code": "cluster_config {\n  instance_type = \"r4.large.search\"\n  dedicated_master_count = 3\n}",
+		"file_id": "1973511c-a1ea-4749-8fdc-4aed830e2727",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.882253",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 46,
+				"side": ""
+			},
+			"start_location": {
+				"line": 43,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4b6b682d-4ebe-4e60-8d39-c6996a82f182",
+		"created_at": "2025-12-01 05:43:24.882253+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elasticsearch domain 'res2' has log publishing disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain.res2 resource includes a log_publishing_options block with enabled = false, which prevents slow logs from being sent to CloudWatch for operational visibility and security auditing.",
+		"recommendation": "Set enabled = true in the log_publishing_options block (or remove the flag to use the default enabled behavior) to ensure logs are delivered.",
+		"impacted_code": "log_publishing_options {\n  cloudwatch_log_group_arn = aws_cloudwatch_log_group.example.arn\n  log_type                 = \"INDEX_SLOW_LOGS\"\n  enabled=false\n}",
+		"file_id": "1973511c-a1ea-4749-8fdc-4aed830e2727",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:24.882253",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 42,
+				"side": ""
+			},
+			"start_location": {
+				"line": 38,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "b00d43f9-8137-4c29-b1e4-32c205ad763f",
+		"created_at": "2025-12-01 05:43:25.735682+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudFront viewer protocol allows insecure HTTP",
+		"severity": "MEDIUM",
+		"description": "In the aws_cloudfront_distribution resource \"pass\", both the default_cache_behavior and ordered_cache_behavior blocks set viewer_protocol_policy to \"allow-all\", permitting unencrypted HTTP connections. This configuration can expose content to eavesdropping and man-in-the-middle attacks by allowing users to access resources over HTTP rather than enforcing HTTPS.",
+		"recommendation": "Change viewer_protocol_policy to \"redirect-to-https\" or \"https-only\" in both default_cache_behavior and ordered_cache_behavior to enforce TLS and ensure all viewer requests use HTTPS.",
+		"impacted_code": "default_cache_behavior {\n  ...\n  viewer_protocol_policy = \"allow-all\"\n  ...\n}\n\nordered_cache_behavior {\n  ...\n  viewer_protocol_policy = \"allow-all\"\n  ...\n}",
+		"file_id": "2f7567ee-51fd-4629-9569-4da1e3bc9c42",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+				{
+					"name": "terraform/checks/resources/aws/GENERAL_SECURITY/example_CloudfrontDistributionEnabled/main.tf",
+					"type": "FILE",
+					"end_line": 160,
+					"start_line": 1
+				}
+			]
+		},
+		"updated_at": "2025-12-01 05:43:25.735682",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 57,
+				"side": ""
+			},
+			"start_location": {
+				"line": 31,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "3890a6b8-f334-4c1d-b6d2-84f50b91e04f",
+		"created_at": "2025-12-01 05:43:39.098279+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "SSM document publicly shared with all accounts",
+		"severity": "LOW",
+		"description": "The SSM document resource “aws_ssm_document.res” is configured with permissions type “Share” and account_ids set to “All”. This effectively shares the document with every AWS account, allowing unauthorized parties to view or execute the document on their instances. To adhere to the principle of least privilege and prevent unintended access or execution, SSM documents should remain private or only shared with specific, trusted account IDs.",
+		"recommendation": "Remove the broad sharing configuration or restrict the `account_ids` list to only the specific AWS account IDs that require access. If no sharing is needed, omit the `permissions` block entirely, leaving the document private by default.",
+		"impacted_code": "permissions = {\n  type        = \"Share\"\n  account_ids = \"All\"\n}",
+		"file_id": "c4a3879a-0c9e-4021-bc9c-31ee3964860d",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:39.098279",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 81,
+				"side": ""
+			},
+			"start_location": {
+				"line": 78,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "c441630f-cad0-4da2-afe2-c376c7f151b3",
+		"created_at": "2025-12-01 05:43:25.735682+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudFront viewer protocol allows insecure HTTP",
+		"severity": "MEDIUM",
+		"description": "In the aws_cloudfront_distribution resource \"res\", both the default_cache_behavior and ordered_cache_behavior blocks set viewer_protocol_policy to \"allow-all\", permitting unencrypted HTTP connections. This configuration can expose content to eavesdropping and man-in-the-middle attacks by allowing users to access resources over HTTP rather than enforcing HTTPS.",
+		"recommendation": "Change viewer_protocol_policy to \"redirect-to-https\" or \"https-only\" in both default_cache_behavior and ordered_cache_behavior to enforce TLS and ensure all viewer requests use HTTPS.",
+		"impacted_code": "default_cache_behavior {\n  ...\n  viewer_protocol_policy = \"allow-all\"\n  ...\n}\n\nordered_cache_behavior {\n  ...\n  viewer_protocol_policy = \"allow-all\"\n  ...\n}",
+		"file_id": "2f7567ee-51fd-4629-9569-4da1e3bc9c42",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+				{
+					"name": "terraform/checks/resources/aws/GENERAL_SECURITY/example_CloudfrontDistributionEnabled/main.tf",
+					"type": "FILE",
+					"end_line": 160,
+					"start_line": 1
+				}
+			]
+		},
+		"updated_at": "2025-12-01 05:43:25.735682",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 137,
+				"side": ""
+			},
+			"start_location": {
+				"line": 111,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4147dbda-aba6-491c-9912-0eca1ddf77af",
+		"created_at": "2025-12-01 05:43:26.301262+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "AWS Transfer Server defaults to public endpoint",
+		"severity": "MEDIUM",
+		"description": "The aws_transfer_server resource does not specify an endpoint_type, which defaults to PUBLIC. This makes the Transfer Family server internet-accessible, increasing its attack surface and potentially exposing it to unauthorized access if user authentication or network controls are not strictly managed.",
+		"recommendation": "Specify endpoint_type = \"VPC\" and configure vpc_endpoint_details (vpc_id, subnet_ids, security_group_ids) to restrict access within your private network. Alternatively, use proper network ACLs or firewall rules to control inbound traffic.",
+		"impacted_code": "resource \"aws_transfer_server\" \"example\" {\n  protocols = [\"SFTP\"]\n}",
+		"file_id": "eb73afed-85a8-4470-9615-b61a5695c9ca",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:26.301262",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 5,
+				"side": ""
+			},
+			"start_location": {
+				"line": 3,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "d653afee-a091-43a5-99f6-92bc1e6ce839",
+		"created_at": "2025-12-01 05:43:50.325659+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "RDS instances and clusters lack encryption at rest",
+		"severity": "HIGH",
+		"description": "The Terraform file defines multiple aws_db_instance and aws_rds_cluster resources without the `storage_encrypted` attribute. By default, RDS storage encryption at rest is disabled, risking exposure of sensitive data stored on the database volumes.",
+		"recommendation": "For every `aws_db_instance` and `aws_rds_cluster` resource, explicitly set `storage_encrypted = true` and, if required, specify a `kms_key_id` to ensure data at rest is encrypted.",
+		"impacted_code": "resource \"aws_db_instance\" \"res\"{\n  name           = \"name\"\n  instance_class = \"db.t3.micro\"\n  engine         = \"postgres\"\n  engine_version = \"13.2\"\n}\n\nresource \"aws_rds_cluster\" \"res\"{\n  engine         = \"aurora-postgresql\"\n  engine_version = \"11.8\"\n}",
+		"file_id": "f94982d4-e28a-4eef-893e-3eb3c594e41b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:50.325659",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 60,
+				"side": ""
+			},
+			"start_location": {
+				"line": 3,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "fb81e143-b31a-4b79-9f26-d3bdb5b18f2a",
+		"created_at": "2025-12-01 05:44:05.468888+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Variable-based rotation interval may exceed threshold",
+		"severity": "MEDIUM",
+		"description": "In resource aws_secretsmanager_secret_rotation.res_2 (lines 19-26), the `automatically_after_days` argument is set to `var.days`. This variable can be configured to any value, potentially exceeding recommended rotation intervals for AWS Secrets Manager. AWS best practices recommend rotating secrets every 30 to 90 days. Using an unbounded variable may allow secrets to remain unchanged for dangerously long periods, increasing the window of compromise.",
+		"recommendation": "Use a static numeric value for `automatically_after_days` that does not exceed 90 days, or add validation on `var.days` (e.g., a Terraform `validation` block) to ensure it falls within an acceptable range (e.g., 1–90).",
+		"impacted_code": "rotation_rules {\n  automatically_after_days = var.days\n}",
+		"file_id": "57db0656-8f53-4acf-ad0e-5ce43016920d",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:44:05.468888",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 26,
+				"side": ""
+			},
+			"start_location": {
+				"line": 19,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "8ee8bad7-fff0-4c59-88ef-5456f75764b9",
+		"created_at": "2025-12-01 05:44:05.468888+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Rotation schedule rate exceeds allowable period",
+		"severity": "MEDIUM",
+		"description": "In resource aws_secretsmanager_secret_rotation.res_scheduled_days (lines 60-68), the `schedule_expression` is set to `\"rate(180 days)\"`, which rotates the secret every 180 days. AWS best practices recommend rotating secrets at most every 90 days to minimize the exposure window. A 180-day interval leaves secrets valid for too long and increases the risk of undetected compromise.",
+		"recommendation": "Adjust the `schedule_expression` to use a rate of 90 days or less (for example, `\"rate(90 days)\"`), or use a cron expression that ensures rotation occurs at least every 90 days.",
+		"impacted_code": "rotation_rules {\n  schedule_expression = \"rate(180 days)\"\n}",
+		"file_id": "57db0656-8f53-4acf-ad0e-5ce43016920d",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:44:05.468888",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 68,
+				"side": ""
+			},
+			"start_location": {
+				"line": 60,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "eb8c64be-7e95-454f-a249-4d90b0b7b14e",
+		"created_at": "2025-12-01 05:43:29.423529+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "RDS deletion protection not set on instance",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource `aws_db_instance.res2` does not specify the `deletion_protection` attribute. By default, deletion protection is false, allowing the instance to be deleted. This increases the risk of accidental or unauthorized deletion and potential data loss.",
+		"recommendation": "Add `deletion_protection = true` to the `aws_db_instance.res2` resource to enforce AWS deletion protection.",
+		"impacted_code": "resource \"aws_db_instance\" \"res2\"{\n    cluster_identifier      = \"aurora-cluster-demo\"\n    availability_zones      = [\"us-west-2a\", \"us-west-2b\", \"us-west-2c\"]\n    database_name           = \"mydb\"\n    master_username         = \"foo\"\n    master_password         = \"bar\"\n    backup_retention_period = 5\n    preferred_backup_window = \"07:00-09:00\"\n    instance_class         = \"m4.large\"\n}",
+		"file_id": "60c86d62-fa08-4052-abf9-cc7ee48e8262",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.423529",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 23,
+				"side": ""
+			},
+			"start_location": {
+				"line": 14,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "df3fdde9-de69-4f15-b141-023cc151c1c0",
+		"created_at": "2025-12-01 05:43:29.533205+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Deprecated Python 3.6 Lambda runtime",
+		"severity": "MEDIUM",
+		"description": "The AWS Lambda function 'res' is configured to use the deprecated runtime 'python3.6'. AWS no longer provides security updates or patches for Python 3.6, leaving the function vulnerable to unpatched security issues.",
+		"recommendation": "Upgrade the Lambda runtime to a supported version such as python3.9 or later to ensure it continues to receive security updates.",
+		"impacted_code": "runtime       = \"python3.6\"",
+		"file_id": "52ee081c-97ae-44ba-b361-dfcdea43e1c6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.533205",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 18,
+				"side": ""
+			},
+			"start_location": {
+				"line": 18,
+				"side": ""
+			}
+		},
+		"category": "Using Components with Known Vulnerabilities"
+	},
+	{
+		"id": "3bf41831-f18a-4fd0-a32e-49305287025e",
+		"created_at": "2025-12-01 05:43:29.533205+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Deprecated .NET Core 3.1 Lambda runtime",
+		"severity": "MEDIUM",
+		"description": "The AWS Lambda function 'res2' is configured to use the deprecated runtime 'dotnetcore3.1'. AWS no longer provides security updates or patches for .NET Core 3.1, leaving the function vulnerable to unpatched security issues.",
+		"recommendation": "Upgrade the Lambda runtime to a supported version such as dotnet6 or later to ensure it continues to receive security updates.",
+		"impacted_code": "runtime       = \"dotnetcore3.1\"",
+		"file_id": "52ee081c-97ae-44ba-b361-dfcdea43e1c6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.533205",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 30,
+				"side": ""
+			},
+			"start_location": {
+				"line": 30,
+				"side": ""
+			}
+		},
+		"category": "Using Components with Known Vulnerabilities"
+	},
+	{
+		"id": "a94f3094-67ed-429f-9d7a-dd4676d513f0",
+		"created_at": "2025-12-01 05:43:32.118401+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing dedicated master nodes and zone awareness",
+		"severity": "MEDIUM",
+		"description": "Resource aws_elasticsearch_domain.res defines a cluster_config block without dedicated_master_count or zone_awareness_enabled. Without dedicated master nodes and zone awareness, the Elasticsearch domain is not highly available and is susceptible to data loss or downtime if master nodes fail or an availability zone goes down.",
+		"recommendation": "Configure the cluster_config block with dedicated_master_count set to at least 3 and zone_awareness_enabled = true to ensure high availability across master nodes and AZs.",
+		"impacted_code": "cluster_config {\n  instance_type = \"r4.large.elasticsearch\"\n}",
+		"file_id": "d583c161-003e-47c1-b08a-47fba746ffd5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.118401",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 7,
+				"side": ""
+			},
+			"start_location": {
+				"line": 5,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "ce0bf4ea-252d-4638-ba7b-c93765931009",
+		"created_at": "2025-12-01 05:43:32.118401+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Zone awareness disabled in Elasticsearch domain res2",
+		"severity": "MEDIUM",
+		"description": "Resource aws_elasticsearch_domain.res2 sets zone_awareness_enabled = false in its cluster_config. Disabling zone awareness prevents distribution of cluster nodes across multiple availability zones, which can lead to a full cluster outage if a single AZ fails.",
+		"recommendation": "Set zone_awareness_enabled = true in the cluster_config block to distribute nodes across AZs for fault tolerance.",
+		"impacted_code": "cluster_config {\n  instance_type = \"r4.large.elasticsearch\"\n  dedicated_master_count = 3\n  zone_awareness_enabled = false\n}",
+		"file_id": "d583c161-003e-47c1-b08a-47fba746ffd5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.118401",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 42,
+				"side": ""
+			},
+			"start_location": {
+				"line": 38,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4df47f01-110f-4ca7-869e-7f597483347f",
+		"created_at": "2025-12-01 05:43:32.118401+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudWatch logging disabled for Elasticsearch domain res2",
+		"severity": "LOW",
+		"description": "Resource aws_elasticsearch_domain.res2 configures log_publishing_options with enabled = false, disabling delivery of slow logs to CloudWatch. Without log delivery, monitoring and auditing of Elasticsearch domain operations is not possible, hindering incident detection and response.",
+		"recommendation": "Remove the enabled = false setting or explicitly set enabled = true in the log_publishing_options block to ensure logs are sent to CloudWatch.",
+		"impacted_code": "log_publishing_options {\n  cloudwatch_log_group_arn = aws_cloudwatch_log_group.example.arn\n  log_type                 = \"INDEX_SLOW_LOGS\"\n  enabled = false\n}",
+		"file_id": "d583c161-003e-47c1-b08a-47fba746ffd5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.118401",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 48,
+				"side": ""
+			},
+			"start_location": {
+				"line": 44,
+				"side": ""
+			}
+		},
+		"category": "Insufficient Logging & Monitoring"
+	},
+	{
+		"id": "c1245e43-13a1-4c07-975d-4bc5b95907e1",
+		"created_at": "2025-12-01 05:43:32.382322+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Outdated RDS CA certificate identifier",
+		"severity": "MEDIUM",
+		"description": "The aws_db_instance \"res\" resource specifies the deprecated CA certificate identifier \"rds-ca-2015\". This identifier may have expired or been removed from AWS trust stores, risking failed TLS validation or fallback to insecure trust anchors. Using a current, supported RDS CA certificate ensures proper TLS validation and mitigates risks associated with deprecated CAs.",
+		"recommendation": "Update the `ca_cert_identifier` to one of the supported recent identifiers, such as `rds-ca-rsa2048-g1`, `rds-ca-rsa4096-g1`, or `rds-ca-ecc384-g1`, and regularly rotate to new AWS-issued CA certificates.",
+		"impacted_code": "resource \"aws_db_instance\" \"res\" {\n  ca_cert_identifier = \"rds-ca-2015\"\n}",
+		"file_id": "ae8bab3a-776a-4688-832b-842fb87be5b1",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+				{
+					"name": "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSCACertIsRecent/main.tf",
+					"type": "FILE",
+					"end_line": 50,
+					"start_line": 1
+				}
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.382322",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 13,
+				"side": ""
+			},
+			"start_location": {
+				"line": 13,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "79ecabf2-f856-459f-8783-bb477809e135",
+		"created_at": "2025-12-01 05:43:32.382322+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded database password in Terraform code",
+		"severity": "HIGH",
+		"description": "The Terraform configuration embeds the database password in plaintext (`password = \"foobarbaz\"`). Storing credentials directly in code or Terraform state files risks accidental exposure, version control leaks, and unauthorized access if the state is compromised.",
+		"recommendation": "Move the password into a Terraform variable marked as `sensitive`, or retrieve it at apply time from a secure secrets manager (e.g., AWS Secrets Manager, HashiCorp Vault) to avoid embedding secrets in code.",
+		"impacted_code": "password = \"foobarbaz\"",
+		"file_id": "ae8bab3a-776a-4688-832b-842fb87be5b1",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+				{
+					"name": "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSCACertIsRecent/main.tf",
+					"type": "FILE",
+					"end_line": 50,
+					"start_line": 1
+				}
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.382322",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "bcb4f724-ce90-4534-8a2e-4ca45397c3dc",
+		"created_at": "2025-12-01 05:43:32.396386+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "S3 Bucket object lock is disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_s3_bucket resource \"disabled_via_object\" explicitly sets object_lock_enabled to \"Disabled\", disabling Amazon S3 Object Lock functionality. Without object lock enabled, objects in this bucket can be accidentally or maliciously deleted or overwritten, preventing enforcement of immutability and retention policies.",
+		"recommendation": "Enable Object Lock by setting `object_lock_enabled = \"Enabled\"` within the `object_lock_configuration` block and configure a default retention policy as required.",
+		"impacted_code": "resource \"aws_s3_bucket\" \"disabled_via_object\" {\n  bucket = \"test-bucket\"\n  acl    = \"private\"\n\n  object_lock_configuration = {\n    object_lock_enabled = \"Disabled\"\n  }\n}",
+		"file_id": "bafceebd-a9ed-49ad-8a48-84a925d56df5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.396386",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 11,
+				"side": ""
+			},
+			"start_location": {
+				"line": 4,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "89f83a43-2103-446e-a0fa-eadf04fcccb8",
+		"created_at": "2025-12-01 05:43:32.396386+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "S3 Bucket object lock is disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_s3_bucket resource \"disabled_via_block\" defines an `object_lock_configuration` block with `object_lock_enabled = \"Disabled\"`. This prevents S3 Object Lock from enforcing write-once-read-many (WORM) protection, leaving data vulnerable to deletion or modification.",
+		"recommendation": "Set `object_lock_enabled = \"Enabled\"` in the `object_lock_configuration` block and configure a default retention policy to enforce object immutability.",
+		"impacted_code": "resource \"aws_s3_bucket\" \"disabled_via_block\" {\n  bucket = \"test-bucket\"\n  acl    = \"private\"\n\n  object_lock_configuration {\n    object_lock_enabled = \"Disabled\"\n  }\n}",
+		"file_id": "bafceebd-a9ed-49ad-8a48-84a925d56df5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.396386",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 20,
+				"side": ""
+			},
+			"start_location": {
+				"line": 13,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "daea6979-61c2-4508-b082-6cdcc658b691",
+		"created_at": "2025-12-01 05:43:32.396386+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "S3 Bucket missing object lock configuration",
+		"severity": "MEDIUM",
+		"description": "The aws_s3_bucket resource \"default\" does not include any `object_lock_configuration` block. By default, Object Lock is disabled, so objects stored in the bucket are not protected against deletion or modification and cannot enforce retention policies.",
+		"recommendation": "Add an `object_lock_configuration` block with `object_lock_enabled = \"Enabled\"` and define a default retention configuration to enable S3 Object Lock protection.",
+		"impacted_code": "resource \"aws_s3_bucket\" \"default\" {\n  bucket = \"test-bucket\"\n  acl    = \"private\"\n}",
+		"file_id": "bafceebd-a9ed-49ad-8a48-84a925d56df5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.396386",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 27,
+				"side": ""
+			},
+			"start_location": {
+				"line": 24,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "06a0c03f-59cb-43c3-80ee-05b36586fc61",
+		"created_at": "2025-12-01 05:43:32.435822+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Second container lacks read-only root filesystem",
+		"severity": "MEDIUM",
+		"description": "The second container definition in aws_ecs_task_definition.res does not set readonlyRootFilesystem to true. Without a read-only root filesystem, a compromised container could write to its root filesystem, persist malicious code, or escalate privileges within the container.",
+		"recommendation": "Add readonlyRootFilesystem = true to every container definition to ensure the root filesystem is read-only.",
+		"impacted_code": "{\n  name      = \"second\"\n  image     = \"service-second\"\n  cpu       = 10\n  memory    = 256\n  essential = true\n  portMappings = [\n    {\n      containerPort = 443\n      hostPort      = 443\n    }\n  ]\n}",
+		"file_id": "c84e527f-425e-47a4-a0e2-847192f87118",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.435822",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 75,
+				"side": ""
+			},
+			"start_location": {
+				"line": 63,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "24e0db4d-4199-4ac1-9d01-c94da14b8922",
+		"created_at": "2025-12-01 05:43:32.435822+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "First container lacks read-only root filesystem",
+		"severity": "MEDIUM",
+		"description": "The first container definition in aws_ecs_task_definition.res2 explicitly sets readonlyRootFilesystem = false. This allows the container to modify its root filesystem, which can be exploited by attackers to persist malware or tamper with binaries.",
+		"recommendation": "Set readonlyRootFilesystem = true for this container to restrict write access to the root filesystem.",
+		"impacted_code": "{\n  name      = \"first\"\n  image     = \"service-first\"\n  cpu       = 10\n  memory    = 512\n  essential = true\n  readonlyRootFilesystem = false\n  portMappings = [\n    {\n      containerPort = 80\n      hostPort      = 80\n    }\n  ]\n}",
+		"file_id": "c84e527f-425e-47a4-a0e2-847192f87118",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:32.435822",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 104,
+				"side": ""
+			},
+			"start_location": {
+				"line": 93,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4e84c295-7ee3-46ce-aa19-fe44955fca40",
+		"created_at": "2025-12-01 05:43:21.443994+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded AWS RDS master_password in Terraform code",
+		"severity": "HIGH",
+		"description": "The Terraform configuration for the aws_rds_cluster resource embeds the master_password value directly in code. Hardcoding database credentials in infrastructure-as-code can lead to leakage if the repository is shared or compromised, and complicates credential rotation and auditing.",
+		"recommendation": "Remove the hardcoded password from the Terraform file. Store and manage the RDS master password in a secure secret store such as AWS Secrets Manager or SSM Parameter Store, and reference it via a data source or input variable.",
+		"impacted_code": "master_password           = \"mustbeeightcharaters\"",
+		"file_id": "49e1a7a1-4a10-46c8-868d-d92dcf056635",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.443994",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 22,
+				"side": ""
+			},
+			"start_location": {
+				"line": 22,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "4c639516-e185-403c-94df-8a44b025dc94",
+		"created_at": "2025-12-01 05:42:54.27398+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "EFS access point root is '/'",
+		"severity": "MEDIUM",
+		"description": "The aws_efs_access_point \"res\" defines a root_directory path of \"/\", granting clients access to the entire file system root. This configuration bypasses any intended directory isolation, allowing users of the access point to traverse and manipulate all files and directories in the file system.",
+		"recommendation": "Limit the access point to a dedicated subdirectory by specifying a non-root path in root_directory (e.g., \"/data/app\"). Ensure POSIX permissions are configured on that directory to enforce access controls.",
+		"impacted_code": "resource \"aws_efs_access_point\" \"res\"{\n  file_system_id = aws_efs_file_system.sharedstore.id\n  root_directory {\n    path=\"/\"\n  }\n}",
+		"file_id": "5e02adf1-44e7-41c6-a631-df94cb6c3a39",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:54.27398",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 18,
+				"side": ""
+			},
+			"start_location": {
+				"line": 13,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "49361630-50ef-4c43-9f82-84236b79422e",
+		"created_at": "2025-12-01 05:42:54.27398+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "EFS access point missing root directory",
+		"severity": "MEDIUM",
+		"description": "The aws_efs_access_point \"res2\" omits a root_directory block, which defaults the root directory to \"/\". Without specifying a dedicated subdirectory, clients gain access to the entire file system root, undermining isolation and permission boundaries.",
+		"recommendation": "Always include a root_directory block and specify a restrictive subdirectory path (e.g., \"/data/app\"). Configure POSIX permissions on that directory to enforce least privilege.",
+		"impacted_code": "resource \"aws_efs_access_point\" \"res2\"{\n  file_system_id = aws_efs_file_system.sharedstore.id\n}",
+		"file_id": "5e02adf1-44e7-41c6-a631-df94cb6c3a39",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:54.27398",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 23,
+				"side": ""
+			},
+			"start_location": {
+				"line": 21,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "192d9a32-f587-422c-b4c1-2d6a1b0fd9a0",
+		"created_at": "2025-12-01 05:42:57.158857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ElastiCache cluster auto upgrades disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_elasticache_cluster resource \"res\" has auto_minor_version_upgrade set to false. This prevents the cluster from automatically applying minor engine updates, leaving it vulnerable to known security flaws and bugs in older Redis versions.",
+		"recommendation": "Enable automatic minor version upgrades by setting auto_minor_version_upgrade = true for aws_elasticache_cluster resources.",
+		"impacted_code": "resource \"aws_elasticache_cluster\" \"res\" {\n  auto_minor_version_upgrade = false\n}",
+		"file_id": "512da3c6-f944-4a2a-a6b8-ed8e670e90f0",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:57.158857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 27,
+				"side": ""
+			},
+			"start_location": {
+				"line": 27,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4b2d1420-07d8-466b-8480-694f028ee527",
+		"created_at": "2025-12-01 05:42:57.158857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ElastiCache cluster snapshot retention disabled",
+		"severity": "LOW",
+		"description": "The aws_elasticache_cluster resource \"res\" has snapshot_retention_limit set to 0, disabling automated backups. Without backups, data recovery after failures or data corruption is not possible, risking data loss.",
+		"recommendation": "Enable snapshot retention by setting snapshot_retention_limit to a value greater than 0 to ensure periodic backups are retained.",
+		"impacted_code": "resource \"aws_elasticache_cluster\" \"res\" {\n  snapshot_retention_limit = 0\n}",
+		"file_id": "512da3c6-f944-4a2a-a6b8-ed8e670e90f0",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:57.158857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 28,
+				"side": ""
+			},
+			"start_location": {
+				"line": 28,
+				"side": ""
+			}
+		},
+		"category": "Resource Management"
+	},
+	{
+		"id": "928025ff-bb88-4418-9bd5-caf27b7765c3",
+		"created_at": "2025-12-01 05:43:21.243819+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "aws_lb missing deletion protection configuration",
+		"severity": "MEDIUM",
+		"description": "The aws_lb resource does not enable deletion protection. Without `enable_deletion_protection = true`, the load balancer can be accidentally or maliciously deleted, leading to service disruption and potential downtime.",
+		"recommendation": "Enable deletion protection by setting `enable_deletion_protection = true` on the aws_lb resource to prevent accidental or unauthorized deletions.",
+		"impacted_code": "resource \"aws_lb\" \"default\" {\n  internal           = false\n  load_balancer_type = \"application\"\n  name               = \"alb\"\n  subnets            = var.public_subnet_ids\n}",
+		"file_id": "6e92c7d7-da0e-4ad2-9559-f5c1bd1299f6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.243819",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 9,
+				"side": ""
+			},
+			"start_location": {
+				"line": 4,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "900173e1-0f78-4e9f-912a-c6d032358c27",
+		"created_at": "2025-12-01 05:43:21.243819+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "aws_alb missing deletion protection configuration",
+		"severity": "MEDIUM",
+		"description": "The aws_alb resource does not enable deletion protection. Without `enable_deletion_protection = true`, the application load balancer can be accidentally or maliciously deleted, causing downtime.",
+		"recommendation": "Enable deletion protection by adding `enable_deletion_protection = true` to the aws_alb resource block to guard against unintended deletions.",
+		"impacted_code": "resource \"aws_alb\" \"default\" {\n  internal           = false\n  load_balancer_type = \"application\"\n  name               = \"alb\"\n  subnets            = var.public_subnet_ids\n}",
+		"file_id": "6e92c7d7-da0e-4ad2-9559-f5c1bd1299f6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.243819",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 16,
+				"side": ""
+			},
+			"start_location": {
+				"line": 11,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "00ab297a-6f78-4f14-b392-ef6fd2090463",
+		"created_at": "2025-12-01 05:43:21.243819+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "aws_lb deletion protection explicitly disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_lb resource explicitly sets `enable_deletion_protection = false`, disabling the safety feature. This allows the load balancer to be deleted without warning, increasing risk of accidental or malicious removal.",
+		"recommendation": "Remove the false setting or change it to `enable_deletion_protection = true` to ensure the load balancer cannot be deleted without first disabling protection deliberately.",
+		"impacted_code": "resource \"aws_lb\" \"disabled\" {\n  internal           = false\n  load_balancer_type = \"application\"\n  name               = \"alb\"\n  subnets            = var.public_subnet_ids\n\n  enable_deletion_protection = false\n}",
+		"file_id": "6e92c7d7-da0e-4ad2-9559-f5c1bd1299f6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.243819",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 25,
+				"side": ""
+			},
+			"start_location": {
+				"line": 18,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "f151332e-443a-4cf4-b00d-e80f89a01680",
+		"created_at": "2025-12-01 05:43:21.243819+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "aws_alb deletion protection explicitly disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_alb resource explicitly disables deletion protection by setting `enable_deletion_protection = false`. This removes the safeguard against unintended deletion of the application load balancer.",
+		"recommendation": "Set `enable_deletion_protection = true` or remove the attribute to enable deletion protection and prevent accidental or unauthorized deletion.",
+		"impacted_code": "resource \"aws_alb\" \"disabled\" {\n  internal           = false\n  load_balancer_type = \"application\"\n  name               = \"alb\"\n  subnets            = var.public_subnet_ids\n\n  enable_deletion_protection = false\n}",
+		"file_id": "6e92c7d7-da0e-4ad2-9559-f5c1bd1299f6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.243819",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 34,
+				"side": ""
+			},
+			"start_location": {
+				"line": 27,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "95546665-18eb-48e1-8749-06eb15aa7245",
+		"created_at": "2025-12-01 05:43:21.443994+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded AWS RDS master_password in Terraform code",
+		"severity": "HIGH",
+		"description": "The Terraform configuration for the aws_rds_cluster resource embeds the master_password value directly in code. Hardcoding database credentials in infrastructure-as-code can lead to leakage if the repository is shared or compromised, and complicates credential rotation and auditing.",
+		"recommendation": "Remove the hardcoded password from the Terraform file. Store and manage the RDS master password in a secure secret store such as AWS Secrets Manager or SSM Parameter Store, and reference it via a data source or input variable.",
+		"impacted_code": "master_password           = \"mustbeeightcharaters\"  # checkov:skip=CKV_SECRET_6 test secret",
+		"file_id": "49e1a7a1-4a10-46c8-868d-d92dcf056635",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:21.443994",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "60d80a6c-3f61-4a8e-ab98-eaace9e445a1",
+		"created_at": "2025-12-01 05:42:46.372057+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudWatch alarm actions disabled",
+		"severity": "MEDIUM",
+		"description": "The CloudWatch alarm resource “aws_cloudwatch_metric_alarm.res” has `actions_enabled = false`, which disables all configured alarm actions (SNS notifications). This misconfiguration can prevent critical alerts from being sent when the number of healthy hosts falls below the defined threshold, leading to undetected service outages or degraded performance.",
+		"recommendation": "Enable alarm actions by setting `actions_enabled = true` or removing the attribute (defaults to true). Ensure all critical alarms have their actions enabled to trigger the configured SNS notifications.",
+		"impacted_code": "resource \"aws_cloudwatch_metric_alarm\" \"res\" {\n  alarm_name          = \"alarmname\"\n  comparison_operator = \"LessThanThreshold\"\n  evaluation_periods  = 1\n  metric_name         = \"HealthyHostCount\"\n  namespace           = \"AWS/NetworkELB\"\n  period              = 60\n  statistic           = \"Average\"\n  threshold           = var.logstash_servers_count\n  alarm_description   = \"Number of healthy nodes in Target Group\"\n  actions_enabled     = false\n  alarm_actions       = [aws_sns_topic.sns.arn]\n  ok_actions          = [aws_sns_topic.sns.arn]\n  dimensions = {\n    TargetGroup  = aws_lb_target_group.lb-tg.arn_suffix\n    LoadBalancer = aws_lb.lb.arn_suffix\n  }\n}",
+		"file_id": "16eef458-2a95-4f1a-a37a-59603ff9e160",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:46.372057",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 55,
+				"side": ""
+			},
+			"start_location": {
+				"line": 38,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "17f03e4e-c6fb-477f-aabf-65476e2567f1",
+		"created_at": "2025-12-01 05:42:47.346136+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CodeCommit approval rule allows single approval",
+		"severity": "MEDIUM",
+		"description": "The CodeCommit approval rule template \"MyExampleApprovalRuleTemplate\" in resource \"res\" sets `NumberOfApprovalsNeeded` to 1. This configuration permits a single reviewer to approve and merge changes into the protected branch (`refs/heads/master`), increasing the risk of unauthorized or unreviewed code being merged. AWS best practices recommend requiring at least two independent approvals for critical branches.",
+		"recommendation": "Modify the `NumberOfApprovalsNeeded` setting to at least 2 in the `aws_codecommit_approval_rule_template` resource to enforce a multi-approver review process.",
+		"impacted_code": "\"NumberOfApprovalsNeeded\": 1",
+		"file_id": "9a7d4400-9529-4879-a0e6-0590079f712b",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:47.346136",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 11,
+				"side": ""
+			},
+			"start_location": {
+				"line": 11,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "bb43660d-419b-485f-9f63-bfab21287031",
+		"created_at": "2025-12-01 05:42:47.359823+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "AMI launch permission granted to external account",
+		"severity": "MEDIUM",
+		"description": "The Terraform configuration uses aws_ami_launch_permission to grant launch permissions for AMI \"ami-2345678\" to AWS account \"987654321\". Sharing an AMI—even with a specific account—can expose proprietary or sensitive images to unintended parties if the account ID is incorrect, compromised, or overly broad. This misconfiguration may lead to unauthorized access or deployment of the AMI",
+		"recommendation": "Restrict AMI launch permissions to only trusted principals. Remove unnecessary aws_ami_launch_permission resources or replace with more granular IAM policies. Verify account IDs before sharing, and consider using AWS Resource Access Manager or AWS Organizations for controlled AMI distribution.",
+		"impacted_code": "resource \"aws_ami_launch_permission\" \"res\"{\n  image_id   = \"ami-2345678\"\n  account_id = \"987654321\"\n}",
+		"file_id": "ed08f106-321f-4195-9018-b6b931573bcb",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:47.359823",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 4,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "7cfc0c7f-fa46-4541-8b72-315625ba82d9",
+		"created_at": "2025-12-01 05:42:48.278857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Sagemaker notebook instance allows root access",
+		"severity": "MEDIUM",
+		"description": "The aws_sagemaker_notebook_instance resource \"res\" explicitly sets root_access to \"Enabled\", allowing users root privileges on the notebook instance. This violates the principle of least privilege. An attacker with access to the notebook could install arbitrary software, modify system files, or escalate privileges on the host.",
+		"recommendation": "Configure aws_sagemaker_notebook_instance resources with root_access = \"Disabled\" to prevent users from obtaining root privileges. Review existing notebook instances and disable root access where it is not required.",
+		"impacted_code": "resource \"aws_sagemaker_notebook_instance\" \"res\"{\n  name                    = \"my-notebook-instance\"\n  role_arn                = aws_iam_role.role.arn\n  instance_type           = \"ml.t2.medium\"\n  default_code_repository = aws_sagemaker_code_repository.example.code_repository_name\n  root_access = \"Enabled\"\n  tags = {\n    Name = \"foo\"\n  }\n}",
+		"file_id": "0fc2f4fa-c50b-4c5e-b318-848785d38f33",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:48.278857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "45e45b04-23f8-4c90-916c-0ebaa1852154",
+		"created_at": "2025-12-01 05:42:48.278857+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Sagemaker notebook uses insecure default root access",
+		"severity": "MEDIUM",
+		"description": "The aws_sagemaker_notebook_instance resource \"res2\" does not specify the root_access attribute. By default, AWS enables root access on Sagemaker notebook instances. This grants users full root privileges, which may allow installation of malicious software or unauthorized modifications at the system level.",
+		"recommendation": "Explicitly set root_access = \"Disabled\" on all aws_sagemaker_notebook_instance resources to enforce least privilege. Ensure that any instances without a root_access setting are updated accordingly.",
+		"impacted_code": "resource \"aws_sagemaker_notebook_instance\" \"res2\"{\n  name                    = \"my-notebook-instance\"\n  role_arn                = aws_iam_role.role.arn\n  instance_type           = \"ml.t2.medium\"\n  default_code_repository = aws_sagemaker_code_repository.example.code_repository_name\n  tags = {\n    Name = \"foo\"\n  }\n}",
+		"file_id": "0fc2f4fa-c50b-4c5e-b318-848785d38f33",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:48.278857",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 20,
+				"side": ""
+			},
+			"start_location": {
+				"line": 12,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "4efcdef4-efe8-4656-8332-91696b34cdb2",
+		"created_at": "2025-12-01 05:42:49.670955+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elastic Beanstalk environment without managed updates",
+		"severity": "MEDIUM",
+		"description": "The aws_elastic_beanstalk_environment resource \"res\" (lines 1-10) does not configure the `ManagedActionsEnabled` setting under the `aws:elasticbeanstalk:managedactions` namespace. Without managed updates enabled, the environment will not automatically apply critical platform and OS patches, increasing the risk of exploitation of known vulnerabilities.",
+		"recommendation": "Add a `setting` block to enable managed updates. For example:\n```\nsetting {\n  namespace = \"aws:elasticbeanstalk:managedactions\"\n  name      = \"ManagedActionsEnabled\"\n  value     = \"true\"\n}\n```",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res\"{\n  name                   = module.this.id\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n}",
+		"file_id": "09649a13-e60e-4811-a194-d7fe55575237",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:49.670955",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "70fd4cee-cb40-4e42-aacd-292ed4c17d38",
+		"created_at": "2025-12-01 05:42:49.670955+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elastic Beanstalk managed updates explicitly disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_elastic_beanstalk_environment resource \"res2\" (lines 12-26) explicitly disables managed updates by setting `ManagedActionsEnabled` to `false` under the `aws:elasticbeanstalk:managedactions` namespace. This prevents automatic patching of the environment, leaving it exposed to unpatched vulnerabilities.",
+		"recommendation": "Change the `ManagedActionsEnabled` value to `true` so that Elastic Beanstalk will automatically apply managed platform updates. For example:\n```\nsetting {\n  namespace = \"aws:elasticbeanstalk:managedactions\"\n  name      = \"ManagedActionsEnabled\"\n  value     = \"true\"\n}\n```",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res2\"{\n  name                   = module.this.id\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n  setting {\n    namespace = \"aws:elasticbeanstalk:managedactions\"\n    name      = \"ManagedActionsEnabled\"\n    value     = \"false\"\n  }\n}",
+		"file_id": "09649a13-e60e-4811-a194-d7fe55575237",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:49.670955",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 26,
+				"side": ""
+			},
+			"start_location": {
+				"line": 12,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "180f2c8f-8fbc-4c25-9ab9-870699e7afd1",
+		"created_at": "2025-12-01 05:42:50.468248+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Network Firewall resource missing deletion protection",
+		"severity": "MEDIUM",
+		"description": "The aws_networkfirewall_firewall resource \"res\" does not specify the delete_protection attribute, which defaults to false. Without deletion protection, this firewall can be accidentally or maliciously deleted, leading to potential network exposure or loss of critical firewall rules.",
+		"recommendation": "Configure delete_protection = true on the aws_networkfirewall_firewall resource to prevent accidental or unauthorized deletions.",
+		"impacted_code": "resource \"aws_networkfirewall_firewall\" \"res\"{\n  name                = \"example\"\n  firewall_policy_arn = aws_networkfirewall_firewall_policy.example.arn\n  vpc_id              = aws_vpc.example.id\n  subnet_mapping {\n    subnet_id = aws_subnet.example.id\n  }\n\n  tags = {\n    Tag1 = \"Value1\"\n    Tag2 = \"Value2\"\n  }\n}",
+		"file_id": "967f10f6-9a98-43ee-9772-e36352ca3f2f",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:50.468248",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 13,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "20e576d3-18f9-4d46-b0e5-77d4bfd0d7b5",
+		"created_at": "2025-12-01 05:42:50.468248+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Firewall delete_protection explicitly set to false",
+		"severity": "MEDIUM",
+		"description": "The aws_networkfirewall_firewall resource \"res2\" explicitly sets delete_protection = false. This disables deletion protection and allows the firewall to be removed unintentionally or by an attacker with Terraform access.",
+		"recommendation": "Set delete_protection = true on the aws_networkfirewall_firewall resource to enforce deletion protection and safeguard against accidental or unauthorized deletions.",
+		"impacted_code": "resource \"aws_networkfirewall_firewall\" \"res2\"{\n  name                = \"example\"\n  firewall_policy_arn = aws_networkfirewall_firewall_policy.example.arn\n  vpc_id              = aws_vpc.example.id\n  subnet_mapping {\n    subnet_id = aws_subnet.example.id\n  }\n\n  tags = {\n    Tag1 = \"Value1\"\n    Tag2 = \"Value2\"\n  }\n  delete_protection = false\n}",
+		"file_id": "967f10f6-9a98-43ee-9772-e36352ca3f2f",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:50.468248",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 28,
+				"side": ""
+			},
+			"start_location": {
+				"line": 15,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "a0b37f57-cd21-4e67-af18-8374dfa5abb3",
+		"created_at": "2025-12-01 05:42:51.519005+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ACM Certificate lifecycle without create_before_destroy",
+		"severity": "MEDIUM",
+		"description": "The aws_acm_certificate resource \"res\" has a lifecycle block with create_before_destroy set to false. This means Terraform will destroy the existing certificate before creating a new one when changes occur, leading to potential downtime during certificate rotation or replacement.",
+		"recommendation": "Enable create_before_destroy by setting it to true in the lifecycle block to ensure the new certificate is created before the old one is destroyed.",
+		"impacted_code": "resource \"aws_acm_certificate\" \"res\" {\n  domain_name       = \"example.com\"\n  validation_method = \"DNS\"\n\n  tags = {\n    Environment = \"test\"\n  }\n\n  lifecycle {\n    create_before_destroy = false\n  }\n}",
+		"file_id": "b98e9e17-a508-42c1-af6f-e3f5a1b03986",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:51.519005",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 12,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "49c35ab2-a6b1-42e2-90fb-a207407a9458",
+		"created_at": "2025-12-01 05:42:51.519005+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "ACM Certificate missing create_before_destroy lifecycle",
+		"severity": "MEDIUM",
+		"description": "The aws_acm_certificate resource \"res2\" does not define a lifecycle block, defaulting create_before_destroy to false. This can cause Terraform to destroy the existing certificate before creating a replacement, potentially causing downtime during certificate updates.",
+		"recommendation": "Add a lifecycle block with create_before_destroy = true to ensure the new certificate is provisioned before the old one is destroyed.",
+		"impacted_code": "resource \"aws_acm_certificate\" \"res2\" {\n  domain_name       = \"example.com\"\n  validation_method = \"DNS\"\n\n  tags = {\n    Environment = \"test\"\n  }\n}",
+		"file_id": "b98e9e17-a508-42c1-af6f-e3f5a1b03986",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:51.519005",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 21,
+				"side": ""
+			},
+			"start_location": {
+				"line": 14,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "eec0c02d-15c3-4572-a6c9-ba443e8e2282",
+		"created_at": "2025-12-01 05:42:53.068129+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudSearch domain HTTPS enforcement disabled",
+		"severity": "MEDIUM",
+		"description": "In resource aws_cloudsearch_domain.res (lines 26–29), endpoint_options.enforce_https is explicitly set to false and the TLS policy is downgraded to allow TLS 1.0. Without enforcing HTTPS, the CloudSearch domain endpoint can be accessed over unencrypted HTTP, exposing data in transit to eavesdropping and man-in-the-middle attacks.",
+		"recommendation": "Enable HTTPS enforcement and use a strong TLS policy. Set `enforce_https = true` and `tls_security_policy = \"Policy-Min-TLS-1-2-2019-07\"` (or a later, more secure policy) in the `endpoint_options` block.",
+		"impacted_code": "endpoint_options {\n  enforce_https       = false\n  tls_security_policy = \"Policy-Min-TLS-1-0-2019-07\"\n}",
+		"file_id": "17850a41-6090-4652-80fc-4011c11ba45c",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:53.068129",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 29,
+				"side": ""
+			},
+			"start_location": {
+				"line": 26,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "e4610c42-e521-4c14-9609-a0d8dc893e3b",
+		"created_at": "2025-12-01 05:42:53.068129+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudSearch domain missing HTTPS enforcement",
+		"severity": "MEDIUM",
+		"description": "In resource aws_cloudsearch_domain.res2 (lines 56–58), the `endpoint_options` block is present but does not specify `enforce_https`, which defaults to false. This allows the CloudSearch domain endpoint to be accessed over unencrypted HTTP by default, risking data exposure in transit.",
+		"recommendation": "Explicitly set `enforce_https = true` and define a strong TLS policy within the `endpoint_options` block, for example: \n```\nendpoint_options {\n  enforce_https       = true\n  tls_security_policy = \"Policy-Min-TLS-1-2-2019-07\"\n}\n```",
+		"impacted_code": "endpoint_options {\n}",
+		"file_id": "17850a41-6090-4652-80fc-4011c11ba45c",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:53.068129",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 58,
+				"side": ""
+			},
+			"start_location": {
+				"line": 56,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "dde64d0e-c45c-475c-9880-aa60747755b3",
+		"created_at": "2025-12-01 05:42:59.318057+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Lambda permission allows public invocation",
+		"severity": "HIGH",
+		"description": "The aws_lambda_permission resource \"res\" uses principal=\"*\", which allows any principal to invoke the Lambda function. This effectively makes the function publicly accessible, enabling unauthorized users or services to trigger it. Such access can lead to unauthorized execution of code, data leakage, unexpected billing charges, or service abuse.",
+		"recommendation": "Restrict the principal to specific AWS services or IAM roles that require invocation. Replace the wildcard \"*\" principal with a more specific ARN (for example, the CloudWatch Events service principal) or remove the permission if it is not required.",
+		"impacted_code": "resource \"aws_lambda_permission\" \"res\" {\n  statement_id  = \"AllowExecutionFromCloudWatch\"\n  action        = \"lambda:InvokeFunction\"\n  function_name = aws_lambda_function.test_lambda.function_name\n  principal     = \"*\"\n  source_arn    = \"arn:aws:events:eu-west-1:111122223333:rule/RunDaily\"\n  qualifier     = aws_lambda_alias.test_alias.name\n}",
+		"file_id": "2ae5f2df-fc2a-4bbe-b7c7-e2bd1bde5bd3",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:59.318057",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 8,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Broken Access Control"
+	},
+	{
+		"id": "dc521273-7854-4673-b1d7-8b28e1a9fc81",
+		"created_at": "2025-12-01 05:42:59.449431+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "GuardDuty detector disabled",
+		"severity": "MEDIUM",
+		"description": "The aws_guardduty_detector resource 'res' has enable set to false, disabling GuardDuty threat detection. Without GuardDuty enabled, AWS will not continuously monitor for malicious activity, potentially leaving unauthorized access or resource misuse undetected.",
+		"recommendation": "Set `enable = true` for this aws_guardduty_detector resource to ensure GuardDuty threat detection is active.",
+		"impacted_code": "resource \"aws_guardduty_detector\" \"res\"{\n  enable = false\n  tags   = { test = \"Fail\" }\n}",
+		"file_id": "3b0ee2c0-476c-4d18-869a-c3d287c8c8eb",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:42:59.449431",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 13,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "bf85c5f3-c404-4b07-8cc7-7a6d0f9520c6",
+		"created_at": "2025-12-01 05:43:00.110242+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing HTTPS enforcement in default cache behavior",
+		"severity": "LOW",
+		"description": "The `default_cache_behavior` block in the `aws_cloudfront_distribution.res` resource has `viewer_protocol_policy` set to an empty string, which defaults to allowing both HTTP and HTTPS. This configuration permits unencrypted HTTP connections, exposing content to potential interception or downgrade attacks.",
+		"recommendation": "Explicitly enforce HTTPS by setting `viewer_protocol_policy` to `redirect-to-https` or `https-only` in the `default_cache_behavior` block.",
+		"impacted_code": "default_cache_behavior {\n  cache_policy_id  = \"4135ea2d-6df8-44a3-9df3-4b5a84be39a\"\n  allowed_methods  = [\"GET\", \"HEAD\", \"OPTIONS\"]\n  path_pattern     = \"/content/*\"\n  target_origin_id = local.s3_origin_id\n  cached_methods   = []\n  viewer_protocol_policy = \"\"\n}",
+		"file_id": "625f1169-9c69-4d31-a9cf-575cc6c030cf",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:00.110242",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 69,
+				"side": ""
+			},
+			"start_location": {
+				"line": 61,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "93de3581-2b4c-400f-b8bb-2245578b053f",
+		"created_at": "2025-12-01 05:43:00.954116+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudSearch domain allows HTTP and TLS1.0 policy",
+		"severity": "HIGH",
+		"description": "The aws_cloudsearch_domain resource \"res\" (lines 26-29) has endpoint_options configured with enforce_https set to false, allowing unencrypted HTTP access, and tls_security_policy set to \"Policy-Min-TLS-1-0-2019-07\", which permits TLS 1.0. TLS 1.0 is deprecated and vulnerable to known attacks, and allowing HTTP exposes data to eavesdropping and downgrade attacks.",
+		"recommendation": "Set enforce_https = true to require HTTPS-only access, and configure tls_security_policy = \"Policy-Min-TLS-1-2-2019-07\" or higher to enforce a modern TLS minimum version.",
+		"impacted_code": "endpoint_options {\n  enforce_https       = false\n  tls_security_policy = \"Policy-Min-TLS-1-0-2019-07\"\n}",
+		"file_id": "f71b5d1b-07cb-4907-98af-e34e0b5d5721",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:00.954116",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 29,
+				"side": ""
+			},
+			"start_location": {
+				"line": 26,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "746d4590-c7fe-4c39-b94c-613e9cee9a6a",
+		"created_at": "2025-12-01 05:43:00.954116+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudSearch domain allows unencrypted HTTP traffic",
+		"severity": "HIGH",
+		"description": "The aws_cloudsearch_domain resource \"res2\" (lines 56-58) has endpoint_options with enforce_https set to false, allowing unencrypted HTTP access. No tls_security_policy is specified, so AWS defaults to a policy that permits TLS 1.0, which is insecure. This configuration exposes data to eavesdropping and weak encryption.",
+		"recommendation": "Set enforce_https = true to require HTTPS-only access, and explicitly set tls_security_policy = \"Policy-Min-TLS-1-2-2019-07\" or higher to enforce a secure TLS minimum version.",
+		"impacted_code": "endpoint_options {\n  enforce_https = false\n}",
+		"file_id": "f71b5d1b-07cb-4907-98af-e34e0b5d5721",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:00.954116",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 58,
+				"side": ""
+			},
+			"start_location": {
+				"line": 56,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "d359dce7-cd12-4d70-98bc-9069e1562f81",
+		"created_at": "2025-12-01 05:43:00.954116+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CloudSearch domain allows HTTP despite TLS1.2 policy",
+		"severity": "MEDIUM",
+		"description": "The aws_cloudsearch_domain resource \"pass\" (lines 86-89) has endpoint_options with enforce_https set to false, allowing unencrypted HTTP access even though tls_security_policy is set to \"Policy-Min-TLS-1-2-2019-07\". Allowing HTTP negates the benefit of the stronger TLS policy.",
+		"recommendation": "Set enforce_https = true to require HTTPS-only access, ensuring all traffic is encrypted under TLS 1.2 or higher.",
+		"impacted_code": "endpoint_options {\n  enforce_https       = false\n  tls_security_policy = \"Policy-Min-TLS-1-2-2019-07\"\n}",
+		"file_id": "f71b5d1b-07cb-4907-98af-e34e0b5d5721",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:00.954116",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 89,
+				"side": ""
+			},
+			"start_location": {
+				"line": 86,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "100101e1-0d37-4d8e-b479-cf9135647257",
+		"created_at": "2025-12-01 05:43:02.186939+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Default cache behavior allows unsafe HTTP methods and HTTP",
+		"severity": "HIGH",
+		"description": "The `default_cache_behavior` block for resource `aws_cloudfront_distribution.pass` (lines 21-38) is configured with:\n  • allowed_methods = [\"DELETE\", \"GET\", \"HEAD\", \"OPTIONS\", \"PATCH\", \"POST\", \"PUT\"]\n  • viewer_protocol_policy = \"allow-all\"\n\nThis allows clients to perform destructive operations (DELETE, PUT, POST, PATCH) against the private S3 origin via CloudFront (using the configured Origin Access Control) and permits unencrypted HTTP connections. An attacker could issue HTTP DELETE or PUT requests through the distribution endpoint to modify or delete objects in the S3 bucket, and exploit the lack of HTTPS to intercept or manipulate traffic in transit.",
+		"recommendation": "Restrict `allowed_methods` in the default cache behavior to safe methods only (e.g., [\"GET\", \"HEAD\", \"OPTIONS\"]) and set `viewer_protocol_policy` to `redirect-to-https` or `https-only` to enforce encrypted connections.",
+		"impacted_code": "default_cache_behavior {\n  allowed_methods  = [\"DELETE\", \"GET\", \"HEAD\", \"OPTIONS\", \"PATCH\", \"POST\", \"PUT\"]\n  cached_methods   = [\"GET\", \"HEAD\"]\n  target_origin_id = local.s3_origin_id\n\n  forwarded_values {\n    query_string = false\n\n    cookies {\n      forward = \"none\"\n    }\n  }\n\n  viewer_protocol_policy = \"allow-all\"\n  min_ttl                = 0\n  default_ttl            = 3600\n  max_ttl                = 86400\n}",
+		"file_id": "7eb252d4-d23d-4e0b-b9ea-c16b32c4a29f",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:02.186939",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 38,
+				"side": ""
+			},
+			"start_location": {
+				"line": 21,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "c0f3fa25-2e4d-48b1-b1f7-2d4e9ced9ea4",
+		"created_at": "2025-12-01 05:43:02.186939+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Default cache behavior allows unsafe HTTP methods and HTTP",
+		"severity": "HIGH",
+		"description": "The `default_cache_behavior` block for resource `aws_cloudfront_distribution.res` (lines 122-139) is configured with:\n  • allowed_methods = [\"DELETE\", \"GET\", \"HEAD\", \"OPTIONS\", \"PATCH\", \"POST\", \"PUT\"]\n  • viewer_protocol_policy = \"allow-all\"\n\nThis allows clients to perform destructive operations (DELETE, PUT, POST, PATCH) against the private S3 origin via CloudFront (using the configured Origin Access Control) and permits unencrypted HTTP connections. An attacker could issue HTTP DELETE or PUT requests through the distribution endpoint to modify or delete objects in the S3 bucket, and exploit the lack of HTTPS to intercept or manipulate traffic in transit.",
+		"recommendation": "Restrict `allowed_methods` in the default cache behavior to safe methods only (e.g., [\"GET\", \"HEAD\", \"OPTIONS\"]) and set `viewer_protocol_policy` to `redirect-to-https` or `https-only` to enforce encrypted connections.",
+		"impacted_code": "default_cache_behavior {\n  allowed_methods  = [\"DELETE\", \"GET\", \"HEAD\", \"OPTIONS\", \"PATCH\", \"POST\", \"PUT\"]\n  cached_methods   = [\"GET\", \"HEAD\"]\n  target_origin_id = local.s3_origin_id\n\n  forwarded_values {\n    query_string = false\n\n    cookies {\n      forward = \"none\"\n    }\n  }\n\n  viewer_protocol_policy = \"allow-all\"\n  min_ttl                = 0\n  default_ttl            = 3600\n  max_ttl                = 86400\n}",
+		"file_id": "7eb252d4-d23d-4e0b-b9ea-c16b32c4a29f",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:02.186939",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 139,
+				"side": ""
+			},
+			"start_location": {
+				"line": 122,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "14360389-6452-4e5c-a64e-90a708facfc1",
+		"created_at": "2025-12-01 05:43:03.029903+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Fargate service uses unpinned platform_version",
+		"severity": "MEDIUM",
+		"description": "The ECS Fargate service resource is configured with platform_version set to LATEST, which can lead to unpredictable behavior and potential security issues due to automatic platform upgrades. Pinning to a specific platform version ensures stability and predictable patch cycles.",
+		"recommendation": "Specify a fixed platform_version for AWS ECS Fargate services instead of using LATEST.",
+		"impacted_code": "resource \"aws_ecs_service\" \"pass\" {\n  name = \"pike\"\n  launch_type = \"FARGATE\"\n  platform_version = \"LATEST\"\n}",
+		"file_id": "1e2ae6ca-93ef-41c9-8842-2d3c3ccf530c",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:03.029903",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 5,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "1e51ca74-2dfe-47cc-9a61-d7a5512bfb81",
+		"created_at": "2025-12-01 05:43:03.029903+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Fargate service defaults to unpinned platform_version",
+		"severity": "MEDIUM",
+		"description": "The ECS Fargate service resource omits the platform_version attribute, which defaults to LATEST, leading to unpredictable behavior as the platform may auto-upgrade. Pinning to a specific platform version ensures consistent behavior.",
+		"recommendation": "Add and set a fixed platform_version for AWS ECS Fargate services instead of relying on the default LATEST.",
+		"impacted_code": "resource \"aws_ecs_service\" \"pass2\" {\n  name = \"pike\"\n  launch_type = \"FARGATE\"\n}",
+		"file_id": "1e2ae6ca-93ef-41c9-8842-2d3c3ccf530c",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:03.029903",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 7,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "cec69ddf-d912-4e63-83db-66f3b153375a",
+		"created_at": "2025-12-01 05:43:03.210298+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded Redshift master password",
+		"severity": "HIGH",
+		"description": "The `master_password` for the Redshift cluster is specified in plain text within the Terraform configuration. Committing secrets to version control risks exposure of database credentials, leading to unauthorized access.",
+		"recommendation": "Do not hardcode sensitive credentials in Terraform code. Use Terraform variables, environment variables, or a secrets management service (e.g., AWS Secrets Manager or SSM Parameter Store) to inject the password at apply time.",
+		"impacted_code": "master_username                     = \"foo_test\"\nmaster_password                     = \"Mustbe8characters\"  # checkov:skip=CKV_SECRET_6 test secret",
+		"file_id": "a489443a-8bac-485b-aa72-ad1ce2b687b5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:03.210298",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 6,
+				"side": ""
+			},
+			"start_location": {
+				"line": 5,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "d0dfea26-f54d-42a1-8f42-1d1e5b15d4aa",
+		"created_at": "2025-12-01 05:43:03.210298+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing enhanced VPC routing for Redshift cluster 'res'",
+		"severity": "MEDIUM",
+		"description": "Resource `aws_redshift_cluster.res` does not specify `enhanced_vpc_routing`. By default this is disabled, meaning COPY and UNLOAD traffic may traverse the public internet instead of staying within the VPC.",
+		"recommendation": "Enable enhanced VPC routing by adding `enhanced_vpc_routing = true` to the `aws_redshift_cluster` resource to ensure all COPY traffic stays within your VPC.",
+		"impacted_code": "resource \"aws_redshift_cluster\" \"res\"{\n  cluster_identifier                  = \"examplea\"\n  availability_zone                   = data.aws_availability_zones.available.names[0]\n  master_username                     = \"foo_test\"\n  master_password                     = \"Mustbe8characters\"\n  node_type                           = \"dc2.large\"\n  automated_snapshot_retention_period = 0\n  allow_version_upgrade               = false\n  skip_final_snapshot                 = true\n  encrypted                           = true\n}",
+		"file_id": "a489443a-8bac-485b-aa72-ad1ce2b687b5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:03.210298",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 26,
+				"side": ""
+			},
+			"start_location": {
+				"line": 16,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "06e985fd-4a74-4b1c-aa6c-c1e9ee5e0018",
+		"created_at": "2025-12-01 05:43:03.210298+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Disabled enhanced VPC routing for Redshift cluster 'res2'",
+		"severity": "MEDIUM",
+		"description": "Resource `aws_redshift_cluster.res2` explicitly sets `enhanced_vpc_routing = false`, which allows COPY and UNLOAD traffic to leave the VPC and traverse the public internet.",
+		"recommendation": "Set `enhanced_vpc_routing = true` to force all COPY and UNLOAD traffic through the VPC.",
+		"impacted_code": "resource \"aws_redshift_cluster\" \"res2\"{\n  ...\n  enhanced_vpc_routing = false\n}",
+		"file_id": "a489443a-8bac-485b-aa72-ad1ce2b687b5",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:03.210298",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 39,
+				"side": ""
+			},
+			"start_location": {
+				"line": 28,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "cb6dd393-7059-483b-afc6-a463e8672783",
+		"created_at": "2025-12-01 05:43:04.586261+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Wildcard Principal Permits SendMessage on Queue",
+		"severity": "MEDIUM",
+		"description": "The SQS queue policy resource ‘aws_sqs_queue_policy.res’ grants the wildcard principal (“*”) permission to perform the ‘sqs:SendMessage’ action on the queue. This allows any AWS principal—including anonymous users or accounts—to send messages to the queue, which can be exploited to flood the queue, incur unexpected costs, or inject malicious payloads into downstream systems.",
+		"recommendation": "Restrict the Principal to the minimal set of IAM entities that require access (for example, a specific IAM role or AWS account) and limit the Action to only the required operations (e.g., “sqs:SendMessage”).",
+		"impacted_code": "resource \"aws_sqs_queue_policy\" \"res\" {\n  queue_url = aws_sqs_queue.res.id\n\n  policy = jsonencode({\n    Version = \"2012-10-17\",\n    Id = \"AllowAllSendMessage\",\n    Statement = [\n      {\n        Effect = \"Allow\",\n        Principal = \"*\",\n        Action = \"sqs:SendMessage\",\n        Resource = aws_sqs_queue.res.arn\n      }\n    ]\n  })\n}",
+		"file_id": "5aeb7b3b-50f3-43fc-a307-efa3fc67dace",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:04.586261",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 21,
+				"side": ""
+			},
+			"start_location": {
+				"line": 6,
+				"side": ""
+			}
+		},
+		"category": "Broken Access Control"
+	},
+	{
+		"id": "ef2277d8-cab2-4961-ba9b-54bdb6a064f8",
+		"created_at": "2025-12-01 05:43:14.022892+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Use of legacy launch_configuration prevents IMDSv2 enforcement",
+		"severity": "LOW",
+		"description": "This Autoscaling Group is configured with the deprecated `launch_configuration` attribute (lines 2–8). Launch Configurations do not support the `instance_metadata_options` block, so you cannot enforce the use of IMDSv2 or disable IMDSv1 on instances. Without forcing IMDSv2, a malicious actor who can execute SSRF on an instance could retrieve IAM credentials via the Instance Metadata Service.",
+		"recommendation": "Migrate this Autoscaling Group to use `launch_template` instead of `launch_configuration`. Define an `aws_launch_template` resource and include an `instance_metadata_options` block to require IMDSv2 (e.g., `http_tokens = \"required\"`). Then reference the template via the `launch_template` argument of the Autoscaling Group.",
+		"impacted_code": "resource \"aws_autoscaling_group\" \"res\"{\n  launch_configuration = aws_launch_configuration.foobar.name\n}",
+		"file_id": "a60cb12a-33d7-42a4-a766-5c3a9908e28a",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+				{
+					"name": "Listed files in 'terraform/checks/resources/aws/GENERAL_SECURITY/example_AutoScalingLaunchTemplate'",
+					"type": "TERMINAL",
+					"end_line": 1,
+					"start_line": 1
+				}
+			]
+		},
+		"updated_at": "2025-12-01 05:43:14.022892",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 8,
+				"side": ""
+			},
+			"start_location": {
+				"line": 2,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "62cb7ead-72f7-4303-889c-20afea249d15",
+		"created_at": "2025-12-01 05:43:16.234705+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Health check disabled on target group",
+		"severity": "LOW",
+		"description": "The aws_lb_target_group.res resource explicitly disables health checks by setting `enabled=false`. Without health checks, the load balancer will continue routing traffic to all registered targets regardless of their actual health, potentially sending requests to unhealthy or non-responsive instances and causing availability and resilience issues.",
+		"recommendation": "Remove the `enabled=false` setting or set `enabled = true`, and define a comprehensive `health_check` block with parameters such as `path`, `interval`, `timeout`, and threshold values to ensure proper monitoring of target health.",
+		"impacted_code": "health_check {\n  enabled=false  # trigger- defaults to true\n}",
+		"file_id": "192d0e78-fc82-4794-a17f-7182699dd658",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:16.234705",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 9,
+				"side": ""
+			},
+			"start_location": {
+				"line": 7,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "0bac3f5b-b742-438a-9c01-49f4fd96e4b7",
+		"created_at": "2025-12-01 05:43:16.234705+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Missing health check on target group",
+		"severity": "LOW",
+		"description": "The aws_lb_target_group.res2 resource does not include any `health_check` block, relying entirely on AWS defaults. Relying on default configuration may not cover your application’s specific health endpoints or thresholds, which can lead to undetected failures and reduced availability.",
+		"recommendation": "Add an explicit `health_check` block to the target group with the appropriate `path`, `port`, `interval`, `timeout`, and threshold settings tailored to your application’s health endpoints.",
+		"impacted_code": "resource \"aws_lb_target_group\" \"res2\" {\n  name     = \"tf-example-lb-tg\"\n  port     = 80\n  protocol = \"HTTP\"\n  vpc_id   = aws_vpc.main.id\n}",
+		"file_id": "192d0e78-fc82-4794-a17f-7182699dd658",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:16.234705",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 17,
+				"side": ""
+			},
+			"start_location": {
+				"line": 12,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "027aaaea-d595-4eed-ac8f-161c26915de3",
+		"created_at": "2025-12-01 05:43:16.234705+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Invalid health_check block configuration on target group",
+		"severity": "LOW",
+		"description": "The aws_lb_target_group.res3 resource attempts to assign `health_check` as an attribute (`health_check = [{}]`) instead of using a nested block. Terraform will ignore this assignment, resulting in no effective health check configuration and fallback to defaults.",
+		"recommendation": "Use a proper nested block for `health_check` rather than an attribute assignment. For example:\n```\nhealth_check {\n  path                = \"/your/health/path\"\n  interval            = 30\n  timeout             = 5\n  healthy_threshold   = 5\n  unhealthy_threshold = 2\n}\n```",
+		"impacted_code": "health_check = [{}]",
+		"file_id": "192d0e78-fc82-4794-a17f-7182699dd658",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:16.234705",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 25,
+				"side": ""
+			},
+			"start_location": {
+				"line": 24,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "54adbf5f-d06b-4dc1-bcf2-4781bedade9d",
+		"created_at": "2025-12-01 05:43:17.406983+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Deletion protection disabled for QLDB ledger",
+		"severity": "MEDIUM",
+		"description": "The aws_qldb_ledger resource has deletion_protection set to false, which allows the ledger to be deleted (e.g., via Terraform destroy or the AWS API) without safeguard. This misconfiguration risks accidental or malicious deletion of critical ledger data.",
+		"recommendation": "Enable deletion protection by setting deletion_protection = true for all production QLDB ledgers to prevent unintentional or unauthorized deletion.",
+		"impacted_code": "resource \"aws_qldb_ledger\" \"disabled\" {\n  name             = \"ledger\"\n  permissions_mode = \"STANDARD\"\n\n  deletion_protection = false\n}",
+		"file_id": "319068f2-94c5-472a-a47d-2c405e70a55e",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:17.406983",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 8,
+				"side": ""
+			},
+			"start_location": {
+				"line": 8,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "915a6d74-ba0e-4342-a98d-55193fb7baf6",
+		"created_at": "2025-12-01 05:43:17.866967+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Publicly accessible Lambda Function URL",
+		"severity": "HIGH",
+		"description": "The aws_lambda_function_url resource `res` is configured with `authorization_type = \"NONE\"`, which makes the Lambda function URL publicly accessible without any authentication or authorization. An attacker can invoke this URL directly to execute the Lambda function and potentially access or manipulate backend resources.",
+		"recommendation": "Change `authorization_type` to `AWS_IAM` (or another suitable authorization mechanism) and configure appropriate IAM policies or resource-based policies to restrict access. For example:\n```\nresource \"aws_lambda_function_url\" \"res\" {\n  function_name      = aws_lambda_function.test.function_name\n  authorization_type = \"AWS_IAM\"\n}\n```\nYou can also add a Lambda function URL policy to restrict access by source IP or VPC.",
+		"impacted_code": "resource \"aws_lambda_function_url\" \"res\"{\n  function_name      = aws_lambda_function.test.function_name\n  authorization_type = \"NONE\"\n}",
+		"file_id": "b374cc48-8542-4c8a-a7e3-3dd0e8a84b8c",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:17.866967",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 4,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "8e65dde1-ab07-4f96-a5e8-5432f42b5205",
+		"created_at": "2025-12-01 05:43:18.995966+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Privileged ECS container enabled in task definition",
+		"severity": "HIGH",
+		"description": "In the ECS task definition resource \"aws_ecs_task_definition.res\", the second container is configured with `privilege = true` inside the container definitions. This enables privileged mode, giving the container elevated access to host devices and the kernel, and greatly increases the attack surface. A compromised privileged container can escalate to the host, access Docker daemon sockets, and compromise the underlying EC2 instance.",
+		"recommendation": "Remove the privileged flag or set it to false. Follow the principle of least privilege by only granting necessary capabilities. If you require specific privileges, consider using Linux capabilities and define a minimal set in the container definition instead of full privileged mode.",
+		"impacted_code": "{\n  name      = \"second\"\n  image     = \"service-second\"\n  cpu       = 10\n  memory    = 256\n  essential = true\n  privilege = true\n  portMappings = [\n    {\n      containerPort = 443\n      hostPort      = 443\n    }\n  ]\n}",
+		"file_id": "a7860bbb-83e2-487f-947c-21b49b4309f6",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:18.995966",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 65,
+				"side": ""
+			},
+			"start_location": {
+				"line": 65,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "ef681e3a-455a-49c8-a1de-049a782c5901",
+		"created_at": "2025-12-01 05:43:19.497883+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Wildcard principal and action in SQS policy",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource aws_sqs_queue_policy \"res\" (lines 2–25) grants Principal \"*\" and Action \"*\" on the SQS queue. Although a Condition restricts aws:SourceArn to a specific SNS topic, the policy still allows any principal to invoke any SQS action if that context key is present. Best practice is to lock down both Principal and Action to only the AWS SNS service and the minimum permissions needed (sqs:SendMessage).",
+		"recommendation": "Restrict the queue policy to only allow the SNS service principal and the sqs:SendMessage action. For example, set Principal to {\"Service\":\"sns.amazonaws.com\"} and Action to \"sqs:SendMessage\".",
+		"impacted_code": "resource \"aws_sqs_queue_policy\" \"res\" {\n  queue_url = aws_sqs_queue.q.id\n\n  policy = <<POLICY\n  {\n    \"Version\": \"2012-10-17\",\n    \"Id\": \"sqspolicy\",\n    \"Statement\": [\n      {\n        \"Sid\": \"First\",\n        \"Effect\": \"Allow\",\n        \"Principal\": \"*\",\n        \"Action\": \"*\",\n        \"Resource\": \"${aws_sqs_queue.q.arn}\",\n        \"Condition\": {\n          \"ArnEquals\": {\"aws:SourceArn\": \"${aws_sns_topic.example.arn}\"}\n        }\n      }\n    ]\n  }\n  POLICY\n}",
+		"file_id": "d0a2bc92-cf21-48c7-b119-547980bb542f",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:19.497883",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 25,
+				"side": ""
+			},
+			"start_location": {
+				"line": 2,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "96f58886-5c9f-453e-95b1-817f05ca0303",
+		"created_at": "2025-12-01 05:43:19.507675+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "CodeBuild project runs in privileged mode",
+		"severity": "MEDIUM",
+		"description": "The aws_codebuild_project resource \"res\" has environment.privileged_mode set to true, which enables the build container to run in privileged mode. This can allow Docker-in-Docker operations with root privileges, potentially leading to container escape and host-level access. Privileged mode should be disabled unless absolutely required for your builds.",
+		"recommendation": "Set environment.privileged_mode to false or remove this attribute to prevent privileged container execution. Adopt least-privilege principles and only enable privileged mode if your build truly requires it.",
+		"impacted_code": "environment {\n  compute_type = \"BUILD_GENERAL1_SMALL\"\n  image        = \"docker:dind\"\n  type         = \"LINUX_CONTAINER\"\n  privileged_mode = true\n}",
+		"file_id": "814e067a-87f6-4433-9129-365758f0a4ef",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:19.507675",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 56,
+				"side": ""
+			},
+			"start_location": {
+				"line": 51,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "0daf68ea-403e-46ac-83ba-13555f61aa97",
+		"created_at": "2025-12-01 05:43:19.693097+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "OpenSearch domain permits plaintext HTTP access",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain resource \"res\" has domain_endpoint_options.enforce_https set to false, allowing unencrypted HTTP connections to the domain. This permits data in transit to be intercepted or modified.",
+		"recommendation": "Set domain_endpoint_options.enforce_https = true on the aws_opensearch_domain resource to enforce HTTPS-only access.",
+		"impacted_code": "domain_endpoint_options {\n  enforce_https=false\n}",
+		"file_id": "06f6d15f-dc1f-48c0-9d66-a65fc4f7f1ad",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:19.693097",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 30,
+				"side": ""
+			},
+			"start_location": {
+				"line": 28,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "0a5c764a-e46a-4575-8c62-66338560fc36",
+		"created_at": "2025-12-01 05:43:19.693097+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "OpenSearch domain missing HTTPS enforcement",
+		"severity": "MEDIUM",
+		"description": "The aws_opensearch_domain resource \"pass2\" does not include a domain_endpoint_options block to enforce HTTPS-only connections. By default, HTTP is allowed, which can expose data in transit to interception.",
+		"recommendation": "Add a domain_endpoint_options block with enforce_https = true to the aws_opensearch_domain resource to require encrypted connections.",
+		"impacted_code": "resource \"aws_opensearch_domain\" \"pass2\" {\n  domain_name    = \"example\"\n  engine_version = \"Elasticsearch_7.10\"\n\n  cluster_config {\n    instance_type = \"r4.large.search\"\n  }\n\n  tags = {\n    Domain = \"TestDomain\"\n  }\n}",
+		"file_id": "06f6d15f-dc1f-48c0-9d66-a65fc4f7f1ad",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:19.693097",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 48,
+				"side": ""
+			},
+			"start_location": {
+				"line": 37,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "073c1504-2e58-49c5-ab5e-ad02a38cdd46",
+		"created_at": "2025-12-01 05:43:20.992955+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded plaintext database password in Terraform",
+		"severity": "MEDIUM",
+		"description": "The Terraform configuration defines the database `password` attribute as a hardcoded plaintext value (`\"password123\"`) in multiple `aws_db_instance` resources. Storing sensitive credentials directly in code repositories can lead to credential leakage if the repository is accessed by unauthorized parties or inadvertently made public.",
+		"recommendation": "Remove hardcoded credentials from code. Use Terraform variables marked as `sensitive` and integrate with a secrets management solution (e.g., AWS Secrets Manager) or environment variables to supply database passwords at apply time.",
+		"impacted_code": "resource \"aws_db_instance\" \"fail1\" {\n  password           = \"password123\"\n  username           = \"admin\"\n  ...\n}\n\nresource \"aws_db_instance\" \"res2\" {\n  password           = \"password123\"\n  username           = \"admin\"\n  ...\n}",
+		"file_id": "17f05fec-5f6c-4223-867f-4970b490ac03",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:20.992955",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 16,
+				"side": ""
+			},
+			"start_location": {
+				"line": 15,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "ccb66da8-8c8b-4c15-bbbe-7aac3bf7413f",
+		"created_at": "2025-12-01 05:43:20.992955+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Publicly accessible database security group",
+		"severity": "HIGH",
+		"description": "The `aws_security_group` resource `db_sg` has an ingress rule allowing traffic from `0.0.0.0/0` to port `5432`. This exposes the database instance to the Internet, increasing the risk of unauthorized access, brute-force attacks, and data exfiltration.",
+		"recommendation": "Restrict database access to a limited set of trusted IP ranges or VPC security groups. Consider using a bastion host, VPN, or AWS PrivateLink to access the database securely.",
+		"impacted_code": "resource \"aws_security_group\" \"db_sg\" {\n  ...\n  ingress {\n    from_port   = 5432\n    to_port     = 5432\n    protocol    = \"tcp\"\n    cidr_blocks = [\"0.0.0.0/0\"]\n  }\n}\n",
+		"file_id": "17f05fec-5f6c-4223-867f-4970b490ac03",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:20.992955",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 45,
+				"side": ""
+			},
+			"start_location": {
+				"line": 40,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	},
+	{
+		"id": "ccac829d-dc6a-4848-8eb1-657c8abd69db",
+		"created_at": "2025-12-01 05:43:20.992955+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Unpatched Aurora PostgreSQL with vulnerable extension enabled",
+		"severity": "MEDIUM",
+		"description": "The `aws_db_instance` resource `fail1` uses `engine_version = \"10.12\"`, which is an outdated Aurora PostgreSQL version with known vulnerabilities, and explicitly enables the `log_fdw` extension (a feature with publicly documented security issues). Similarly, the `res2` instance uses `engine_version = \"11.8\"` and enables the same extension. Attackers with database access could exploit these vulnerabilities to escalate privileges or read sensitive logs.",
+		"recommendation": "Upgrade the Aurora PostgreSQL engine to the latest supported minor version. Disable or remove the `log_fdw` extension by setting the engine parameter `log_fdw` to `off` or omitting it entirely.",
+		"impacted_code": "resource \"aws_db_instance\" \"fail1\" {\n  engine_version     = \"10.12\"\n  ...\n  engine_parameters {\n    name  = \"log_fdw\"\n    value = \"on\"\n  }\n}\n\nresource \"aws_db_instance\" \"res2\" {\n  engine_version     = \"11.8\"\n  ...\n  engine_parameters {\n    name  = \"log_fdw\"\n    value = \"on\"\n  }\n}",
+		"file_id": "17f05fec-5f6c-4223-867f-4970b490ac03",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:20.992955",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 27,
+				"side": ""
+			},
+			"start_location": {
+				"line": 9,
+				"side": ""
+			}
+		},
+		"category": "Using Components with Known Vulnerabilities"
+	},
+	{
+		"id": "587b18b0-8abe-4083-af22-8d4fa3050aaa",
+		"created_at": "2025-12-01 05:43:29.031375+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Elastic Beanstalk enhanced health not enabled",
+		"severity": "LOW",
+		"description": "The aws_elastic_beanstalk_environment resource \"res\" (lines 1–10) does not configure enhanced health reporting. Without the `HealthStreamingEnabled` setting in the `aws:elasticbeanstalk:healthreporting:system` namespace set to `true`, advanced health metrics and streaming are not enabled. This reduces visibility into application health and may delay detection of operational issues.",
+		"recommendation": "Add a `setting` block to enable enhanced health reporting by specifying namespace `aws:elasticbeanstalk:healthreporting:system`, name `HealthStreamingEnabled`, and value `true`.",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res\"{\n  name                   = \"beany\"\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n}",
+		"file_id": "55a2ff32-b805-4dbb-993d-af8fe16f7382",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.031375",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 1,
+				"side": ""
+			}
+		},
+		"category": "Insufficient Logging & Monitoring"
+	},
+	{
+		"id": "df04c33a-3430-4948-9416-e3be0794db90",
+		"created_at": "2025-12-01 05:43:29.031375+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Incorrect health check type configured",
+		"severity": "LOW",
+		"description": "The aws_elastic_beanstalk_environment resource \"res2\" (lines 12–26) sets `SystemType` to `basic` under the `aws:elasticbeanstalk:healthreporting:system` namespace rather than enabling enhanced health streaming. Using basic health reporting prevents access to detailed health metrics.",
+		"recommendation": "Replace the `SystemType` setting with a `HealthStreamingEnabled` setting set to `true`, or set `SystemType` to `enhanced` to enable enhanced health reporting.",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res2\"{\n  name                   = \"beany\"\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n  setting {\n    namespace = \"aws:elasticbeanstalk:healthreporting:system\"\n    name      = \"SystemType\"\n    value     = \"basic\"\n  }\n}",
+		"file_id": "55a2ff32-b805-4dbb-993d-af8fe16f7382",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.031375",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 26,
+				"side": ""
+			},
+			"start_location": {
+				"line": 12,
+				"side": ""
+			}
+		},
+		"category": "Insufficient Logging & Monitoring"
+	},
+	{
+		"id": "1eab2787-f533-4d1e-874e-eebd0d52ad52",
+		"created_at": "2025-12-01 05:43:29.031375+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "HealthStreamingEnabled explicitly disabled",
+		"severity": "LOW",
+		"description": "The aws_elastic_beanstalk_environment resource \"res3\" (lines 28–48) explicitly sets `HealthStreamingEnabled` to `False`, disabling enhanced health streaming. Additionally, a non-standard `guff` namespace is used, which is ignored by AWS. This configuration prevents enhanced health monitoring.",
+		"recommendation": "Remove or update the `HealthStreamingEnabled` setting to `true` under the `aws:elasticbeanstalk:healthreporting:system` namespace and remove unsupported namespaces.",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res3\" {\n  name                   = \"beany\"\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n  setting {\n    namespace = \"aws:elasticbeanstalk:healthreporting:system\"\n    name      = \"HealthStreamingEnabled\"\n    value     = \"False\"\n  }\n\n  setting {\n    namespace = \"guff\"\n    name      = \"SystemType\"\n    value     = \"basic\"\n  }\n}",
+		"file_id": "55a2ff32-b805-4dbb-993d-af8fe16f7382",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.031375",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 48,
+				"side": ""
+			},
+			"start_location": {
+				"line": 28,
+				"side": ""
+			}
+		},
+		"category": "Insufficient Logging & Monitoring"
+	},
+	{
+		"id": "97ac7067-e974-429a-a5fd-3592fc79d5a4",
+		"created_at": "2025-12-01 05:43:29.031375+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "HealthStreamingEnabled value missing",
+		"severity": "LOW",
+		"description": "The aws_elastic_beanstalk_environment resource \"res4\" (lines 50–65) includes a `HealthStreamingEnabled` setting but provides an empty `resource` and `value`. This effectively prevents enabling enhanced health streaming.",
+		"recommendation": "Provide a non-empty `value = \"true\"` for the `HealthStreamingEnabled` setting under the `aws:elasticbeanstalk:healthreporting:system` namespace and remove the unused `resource` attribute.",
+		"impacted_code": "resource \"aws_elastic_beanstalk_environment\" \"res4\" {\n  name                   = \"beany\"\n  application            = var.elastic_beanstalk_application_name\n  description            = var.description\n  tier                   = var.tier\n  solution_stack_name    = var.solution_stack_name\n  wait_for_ready_timeout = var.wait_for_ready_timeout\n  version_label          = var.version_label\n  tags                   = local.tags\n  setting {\n    namespace = \"aws:elasticbeanstalk:healthreporting:system\"\n    name      = \"HealthStreamingEnabled\"\n    resource  = \"\"\n    value     = \"\"\n  }\n}",
+		"file_id": "55a2ff32-b805-4dbb-993d-af8fe16f7382",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.031375",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 65,
+				"side": ""
+			},
+			"start_location": {
+				"line": 50,
+				"side": ""
+			}
+		},
+		"category": "Insufficient Logging & Monitoring"
+	},
+	{
+		"id": "5ee502f2-1227-4924-897b-06ee4fc7bfea",
+		"created_at": "2025-12-01 05:43:29.423529+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Hardcoded RDS master credentials in Terraform configuration",
+		"severity": "HIGH",
+		"description": "The Terraform file contains hardcoded `master_username` and `master_password` values for the RDS instances. Storing database credentials in plaintext within code can lead to credential leakage via version control or exposed state files. An attacker with access to the repository or state file could retrieve these secrets and connect to the database with elevated privileges.",
+		"recommendation": "Use Terraform variables or AWS Secrets Manager (e.g., `aws_secretsmanager_secret` and `aws_secretsmanager_secret_version`) to inject credentials at runtime. Do not store sensitive passwords in version-controlled Terraform code.",
+		"impacted_code": "master_username         = \"foo\"\nmaster_password         = \"bar\"",
+		"file_id": "60c86d62-fa08-4052-abf9-cc7ee48e8262",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.423529",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 7,
+				"side": ""
+			},
+			"start_location": {
+				"line": 6,
+				"side": ""
+			}
+		},
+		"category": "Sensitive Data Exposure"
+	},
+	{
+		"id": "212f208e-37a2-416f-b374-7ec841261a84",
+		"created_at": "2025-12-01 05:43:29.423529+00",
+		"scan_id": "ba2c85aa-f5b0-4b4f-84c7-47e89bf2442a",
+		"title": "Deletion protection disabled on RDS instance",
+		"severity": "MEDIUM",
+		"description": "The Terraform resource `aws_db_instance.res` explicitly sets `deletion_protection = false`, disabling AWS's built-in protection against accidental or malicious deletion. Without deletion protection, an attacker or operator with delete privileges can remove the database instance and cause irreversible data loss.",
+		"recommendation": "Enable deletion protection by setting `deletion_protection = true` on all `aws_db_instance` resources to prevent accidental or unauthorized removal of the database instance.",
+		"impacted_code": "deletion_protection = false",
+		"file_id": "60c86d62-fa08-4052-abf9-cc7ee48e8262",
+		"details": {
+			"agent": {
+				"name": "OTHER"
+			},
+			"sources": [
+			]
+		},
+		"updated_at": "2025-12-01 05:43:29.423529",
+		"suggested_fix": null,
+		"location": {
+			"end_location": {
+				"line": 10,
+				"side": ""
+			},
+			"start_location": {
+				"line": 10,
+				"side": ""
+			}
+		},
+		"category": "Security Misconfiguration"
+	}
+]

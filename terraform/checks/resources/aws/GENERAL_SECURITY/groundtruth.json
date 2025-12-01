@@ -27,13 +27,13 @@
     "impacted_code": "aws_api_gateway_rest_api.res"
   },
   {
-    "title": "example_APIGatewayCreateBeforeDestroy - aws_api_gateway_rest_api.fail2",
-    "description": "Failing resource aws_api_gateway_rest_api.res2in example example_APIGatewayCreateBeforeDestroy.",
+    "title": "example_APIGatewayCreateBeforeDestroy - aws_api_gateway_rest_api.res2",
+    "description": "Failing resource aws_api_gateway_rest_api.res2 in example example_APIGatewayCreateBeforeDestroy.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_APIGatewayCreateBeforeDestroy/main.tf"
     ],
-    "impacted_code": "aws_api_gateway_rest_api.fail2"
+    "impacted_code": "aws_api_gateway_rest_api.res2"
   },
   {
     "title": "example_AMILaunchIsShared - aws_ami_launch_permission.res",
@@ -54,31 +54,31 @@
     "impacted_code": "aws_acm_certificate.res"
   },
   {
-    "title": "example_ACMCertCreateBeforeDestroy - aws_acm_certificate.fail2",
-    "description": "Failing resource aws_acm_certificate.res2in example example_ACMCertCreateBeforeDestroy.",
+    "title": "example_ACMCertCreateBeforeDestroy - aws_acm_certificate.res2",
+    "description": "Failing resource aws_acm_certificate.res2 in example example_ACMCertCreateBeforeDestroy.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ACMCertCreateBeforeDestroy/main.tf"
     ],
-    "impacted_code": "aws_acm_certificate.fail2"
+    "impacted_code": "aws_acm_certificate.res2"
   },
   {
-    "title": "example_UnpatchedAuroraPostgresDB - aws_db_instance.fail1",
-    "description": "Failing resource aws_db_instance.fail1 in example example_UnpatchedAuroraPostgresDB.",
+    "title": "example_UnpatchedAuroraPostgresDB - aws_db_instance.res1",
+    "description": "Failing resource aws_db_instance.res1 in example example_UnpatchedAuroraPostgresDB.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_UnpatchedAuroraPostgresDB/main.tf"
     ],
-    "impacted_code": "aws_db_instance.fail1"
+    "impacted_code": "aws_db_instance.res1"
   },
   {
-    "title": "example_UnpatchedAuroraPostgresDB - aws_db_instance.fail2",
-    "description": "Failing resource aws_db_instance.res2in example example_UnpatchedAuroraPostgresDB.",
+    "title": "example_UnpatchedAuroraPostgresDB - aws_db_instance.res2",
+    "description": "Failing resource aws_db_instance.res2 in example example_UnpatchedAuroraPostgresDB.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_UnpatchedAuroraPostgresDB/main.tf"
     ],
-    "impacted_code": "aws_db_instance.fail2"
+    "impacted_code": "aws_db_instance.res2"
   },
   {
     "title": "example_SSMDocumentsArePrivate - aws_ssm_document.res",
@@ -117,22 +117,22 @@
     "impacted_code": "aws_sqs_queue_policy.res"
   },
   {
-    "title": "example_SQSOverlyPermissive - aws_sqs_queue.fail2",
-    "description": "Failing resource aws_sqs_queue.res2in example example_SQSOverlyPermissive.",
+    "title": "example_SQSOverlyPermissive - aws_sqs_queue.res2",
+    "description": "Failing resource aws_sqs_queue.res2 in example example_SQSOverlyPermissive.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_SQSOverlyPermissive/main.tf"
     ],
-    "impacted_code": "aws_sqs_queue.fail2"
+    "impacted_code": "aws_sqs_queue.res2"
   },
   {
-    "title": "example_SQSOverlyPermissive - aws_sqs_queue_policy.fail2",
-    "description": "Failing resource aws_sqs_queue_policy.res2in example example_SQSOverlyPermissive.",
+    "title": "example_SQSOverlyPermissive - aws_sqs_queue_policy.res2",
+    "description": "Failing resource aws_sqs_queue_policy.res2 in example example_SQSOverlyPermissive.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_SQSOverlyPermissive/main.tf"
     ],
-    "impacted_code": "aws_sqs_queue_policy.fail2"
+    "impacted_code": "aws_sqs_queue_policy.res2"
   },
   {
     "title": "example_SecretManagerSecret90days - aws_secretsmanager_secret_rotation.res",
@@ -144,22 +144,22 @@
     "impacted_code": "aws_secretsmanager_secret_rotation.res"
   },
   {
-    "title": "example_SecretManagerSecret90days - aws_secretsmanager_secret_rotation.fail_2",
-    "description": "Failing resource aws_secretsmanager_secret_rotation.fail_2 in example example_SecretManagerSecret90days.",
+    "title": "example_SecretManagerSecret90days - aws_secretsmanager_secret_rotation.res_2",
+    "description": "Failing resource aws_secretsmanager_secret_rotation.res_2 in example example_SecretManagerSecret90days.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_SecretManagerSecret90days/main.tf"
     ],
-    "impacted_code": "aws_secretsmanager_secret_rotation.fail_2"
+    "impacted_code": "aws_secretsmanager_secret_rotation.res_2"
   },
   {
-    "title": "example_SecretManagerSecret90days - aws_secretsmanager_secret_rotation.fail_scheduled_days",
-    "description": "Failing resource aws_secretsmanager_secret_rotation.fail_scheduled_days in example example_SecretManagerSecret90days.",
+    "title": "example_SecretManagerSecret90days - aws_secretsmanager_secret_rotation.res_scheduled_days",
+    "description": "Failing resource aws_secretsmanager_secret_rotation.res_scheduled_days in example example_SecretManagerSecret90days.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_SecretManagerSecret90days/main.tf"
     ],
-    "impacted_code": "aws_secretsmanager_secret_rotation.fail_scheduled_days"
+    "impacted_code": "aws_secretsmanager_secret_rotation.res_scheduled_days"
   },
   {
     "title": "example_SagemakerNotebookRoot - aws_sagemaker_notebook_instance.res",
@@ -171,13 +171,13 @@
     "impacted_code": "aws_sagemaker_notebook_instance.res"
   },
   {
-    "title": "example_SagemakerNotebookRoot - aws_sagemaker_notebook_instance.fail2",
-    "description": "Failing resource aws_sagemaker_notebook_instance.res2in example example_SagemakerNotebookRoot.",
+    "title": "example_SagemakerNotebookRoot - aws_sagemaker_notebook_instance.res2",
+    "description": "Failing resource aws_sagemaker_notebook_instance.res2 in example example_SagemakerNotebookRoot.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_SagemakerNotebookRoot/main.tf"
     ],
-    "impacted_code": "aws_sagemaker_notebook_instance.fail2"
+    "impacted_code": "aws_sagemaker_notebook_instance.res2"
   },
   {
     "title": "example_S3AbortIncompleteUploads - aws_s3_bucket_lifecycle_configuration.res",
@@ -189,13 +189,13 @@
     "impacted_code": "aws_s3_bucket_lifecycle_configuration.res"
   },
   {
-    "title": "example_S3AbortIncompleteUploads - aws_s3_bucket_lifecycle_configuration.fail2",
-    "description": "Failing resource aws_s3_bucket_lifecycle_configuration.res2in example example_S3AbortIncompleteUploads.",
+    "title": "example_S3AbortIncompleteUploads - aws_s3_bucket_lifecycle_configuration.res2",
+    "description": "Failing resource aws_s3_bucket_lifecycle_configuration.res2 in example example_S3AbortIncompleteUploads.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_S3AbortIncompleteUploads/main.tf"
     ],
-    "impacted_code": "aws_s3_bucket_lifecycle_configuration.fail2"
+    "impacted_code": "aws_s3_bucket_lifecycle_configuration.res2"
   },
   {
     "title": "example_S3AbortIncompleteUploads - aws_s3_bucket_lifecycle_configuration.res3",
@@ -216,13 +216,13 @@
     "impacted_code": "aws_redshift_cluster.res"
   },
   {
-    "title": "example_RedshiftClusterUseEnhancedVPCRouting - aws_redshift_cluster.fail2",
-    "description": "Failing resource aws_redshift_cluster.res2in example example_RedshiftClusterUseEnhancedVPCRouting.",
+    "title": "example_RedshiftClusterUseEnhancedVPCRouting - aws_redshift_cluster.res2",
+    "description": "Failing resource aws_redshift_cluster.res2 in example example_RedshiftClusterUseEnhancedVPCRouting.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_RedshiftClusterUseEnhancedVPCRouting/main.tf"
     ],
-    "impacted_code": "aws_redshift_cluster.fail2"
+    "impacted_code": "aws_redshift_cluster.res2"
   },
   {
     "title": "example_RedshiftClusterDatabaseName - aws_redshift_cluster.res",
@@ -252,13 +252,13 @@
     "impacted_code": "aws_rds_cluster.res"
   },
   {
-    "title": "example_RDSPostgreSQLLogFDWExtension - aws_db_instance.fail_old",
-    "description": "Failing resource aws_db_instance.fail_old in example example_RDSPostgreSQLLogFDWExtension.",
+    "title": "example_RDSPostgreSQLLogFDWExtension - aws_db_instance.res_old",
+    "description": "Failing resource aws_db_instance.res_old in example example_RDSPostgreSQLLogFDWExtension.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSPostgreSQLLogFDWExtension/main.tf"
     ],
-    "impacted_code": "aws_db_instance.fail_old"
+    "impacted_code": "aws_db_instance.res_old"
   },
   {
     "title": "example_RDSInstanceDeletionProtection - aws_db_instance.res",
@@ -270,13 +270,13 @@
     "impacted_code": "aws_db_instance.res"
   },
   {
-    "title": "example_RDSInstanceDeletionProtection - aws_db_instance.fail2",
-    "description": "Failing resource aws_db_instance.res2in example example_RDSInstanceDeletionProtection.",
+    "title": "example_RDSInstanceDeletionProtection - aws_db_instance.res2",
+    "description": "Failing resource aws_db_instance.res2 in example example_RDSInstanceDeletionProtection.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSInstanceDeletionProtection/main.tf"
     ],
-    "impacted_code": "aws_db_instance.fail2"
+    "impacted_code": "aws_db_instance.res2"
   },
   {
     "title": "example_RDSClusterCopyTags - aws_rds_cluster.res",
@@ -288,13 +288,13 @@
     "impacted_code": "aws_rds_cluster.res"
   },
   {
-    "title": "example_RDSClusterCopyTags - aws_rds_cluster.fail2",
-    "description": "Failing resource aws_rds_cluster.res2in example example_RDSClusterCopyTags.",
+    "title": "example_RDSClusterCopyTags - aws_rds_cluster.res2",
+    "description": "Failing resource aws_rds_cluster.res2 in example example_RDSClusterCopyTags.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSClusterCopyTags/main.tf"
     ],
-    "impacted_code": "aws_rds_cluster.fail2"
+    "impacted_code": "aws_rds_cluster.res2"
   },
   {
     "title": "example_RDSClusterAuroraBacktrack - aws_rds_cluster.res",
@@ -306,13 +306,13 @@
     "impacted_code": "aws_rds_cluster.res"
   },
   {
-    "title": "example_RDSClusterAuroraBacktrack - aws_rds_cluster.fail2",
-    "description": "Failing resource aws_rds_cluster.res2in example example_RDSClusterAuroraBacktrack.",
+    "title": "example_RDSClusterAuroraBacktrack - aws_rds_cluster.res2",
+    "description": "Failing resource aws_rds_cluster.res2 in example example_RDSClusterAuroraBacktrack.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_RDSClusterAuroraBacktrack/main.tf"
     ],
-    "impacted_code": "aws_rds_cluster.fail2"
+    "impacted_code": "aws_rds_cluster.res2"
   },
   {
     "title": "example_RDSCACertIsRecent - aws_db_instance.res",
@@ -333,13 +333,13 @@
     "impacted_code": "aws_networkfirewall_firewall.res"
   },
   {
-    "title": "example_NetworkFirewallDeletionProtection - aws_networkfirewall_firewall.fail2",
-    "description": "Failing resource aws_networkfirewall_firewall.res2in example example_NetworkFirewallDeletionProtection.",
+    "title": "example_NetworkFirewallDeletionProtection - aws_networkfirewall_firewall.res2",
+    "description": "Failing resource aws_networkfirewall_firewall.res2 in example example_NetworkFirewallDeletionProtection.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_NetworkFirewallDeletionProtection/main.tf"
     ],
-    "impacted_code": "aws_networkfirewall_firewall.fail2"
+    "impacted_code": "aws_networkfirewall_firewall.res2"
   },
   {
     "title": "example_MQBrokerVersion - aws_mq_broker.res",
@@ -351,13 +351,13 @@
     "impacted_code": "aws_mq_broker.res"
   },
   {
-    "title": "example_MQBrokerVersion - aws_mq_broker.fail2",
-    "description": "Failing resource aws_mq_broker.res2in example example_MQBrokerVersion.",
+    "title": "example_MQBrokerVersion - aws_mq_broker.res2",
+    "description": "Failing resource aws_mq_broker.res2 in example example_MQBrokerVersion.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_MQBrokerVersion/main.tf"
     ],
-    "impacted_code": "aws_mq_broker.fail2"
+    "impacted_code": "aws_mq_broker.res2"
   },
   {
     "title": "example_MQBrokerVersion - aws_mq_configuration.res",
@@ -378,13 +378,13 @@
     "impacted_code": "aws_lb_target_group.res"
   },
   {
-    "title": "example_LBTargetGroupDefinesHealthcheck - aws_lb_target_group.fail2",
-    "description": "Failing resource aws_lb_target_group.res2in example example_LBTargetGroupDefinesHealthcheck.",
+    "title": "example_LBTargetGroupDefinesHealthcheck - aws_lb_target_group.res2",
+    "description": "Failing resource aws_lb_target_group.res2 in example example_LBTargetGroupDefinesHealthcheck.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_LBTargetGroupDefinesHealthcheck/main.tf"
     ],
-    "impacted_code": "aws_lb_target_group.fail2"
+    "impacted_code": "aws_lb_target_group.res2"
   },
   {
     "title": "example_LBTargetGroupDefinesHealthcheck - aws_lb_target_group.res3",
@@ -450,13 +450,13 @@
     "impacted_code": "aws_opensearch_domain.res"
   },
   {
-    "title": "example_ElasticsearchDomainHA - aws_opensearch_domain.fail2",
-    "description": "Failing resource aws_opensearch_domain.res2in example example_ElasticsearchDomainHA.",
+    "title": "example_ElasticsearchDomainHA - aws_opensearch_domain.res2",
+    "description": "Failing resource aws_opensearch_domain.res2 in example example_ElasticsearchDomainHA.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ElasticsearchDomainHA/opensearch.tf"
     ],
-    "impacted_code": "aws_opensearch_domain.fail2"
+    "impacted_code": "aws_opensearch_domain.res2"
   },
   {
     "title": "example_ElasticsearchDomainHA - aws_elasticsearch_domain.res",
@@ -468,13 +468,13 @@
     "impacted_code": "aws_elasticsearch_domain.res"
   },
   {
-    "title": "example_ElasticsearchDomainHA - aws_elasticsearch_domain.fail2",
-    "description": "Failing resource aws_elasticsearch_domain.res2in example example_ElasticsearchDomainHA.",
+    "title": "example_ElasticsearchDomainHA - aws_elasticsearch_domain.res2",
+    "description": "Failing resource aws_elasticsearch_domain.res2 in example example_ElasticsearchDomainHA.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ElasticsearchDomainHA/main.tf"
     ],
-    "impacted_code": "aws_elasticsearch_domain.fail2"
+    "impacted_code": "aws_elasticsearch_domain.res2"
   },
   {
     "title": "example_ElasticsearchDomainEnforceHTTPS - aws_opensearch_domain.res",
@@ -513,13 +513,13 @@
     "impacted_code": "aws_elastic_beanstalk_environment.res"
   },
   {
-    "title": "example_ElasticBeanstalkUseManagedUpdates - aws_elastic_beanstalk_environment.fail2",
-    "description": "Failing resource aws_elastic_beanstalk_environment.res2in example example_ElasticBeanstalkUseManagedUpdates.",
+    "title": "example_ElasticBeanstalkUseManagedUpdates - aws_elastic_beanstalk_environment.res2",
+    "description": "Failing resource aws_elastic_beanstalk_environment.res2 in example example_ElasticBeanstalkUseManagedUpdates.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ElasticBeanstalkUseManagedUpdates/main.tf"
     ],
-    "impacted_code": "aws_elastic_beanstalk_environment.fail2"
+    "impacted_code": "aws_elastic_beanstalk_environment.res2"
   },
   {
     "title": "example_ElasticBeanstalkUseEnhancedHealthChecks - aws_elastic_beanstalk_environment.res",
@@ -531,13 +531,13 @@
     "impacted_code": "aws_elastic_beanstalk_environment.res"
   },
   {
-    "title": "example_ElasticBeanstalkUseEnhancedHealthChecks - aws_elastic_beanstalk_environment.fail2",
-    "description": "Failing resource aws_elastic_beanstalk_environment.res2in example example_ElasticBeanstalkUseEnhancedHealthChecks.",
+    "title": "example_ElasticBeanstalkUseEnhancedHealthChecks - aws_elastic_beanstalk_environment.res2",
+    "description": "Failing resource aws_elastic_beanstalk_environment.res2 in example example_ElasticBeanstalkUseEnhancedHealthChecks.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ElasticBeanstalkUseEnhancedHealthChecks/main.tf"
     ],
-    "impacted_code": "aws_elastic_beanstalk_environment.fail2"
+    "impacted_code": "aws_elastic_beanstalk_environment.res2"
   },
   {
     "title": "example_ElasticBeanstalkUseEnhancedHealthChecks - aws_elastic_beanstalk_environment.res3",
@@ -576,13 +576,13 @@
     "impacted_code": "aws_efs_access_point.res"
   },
   {
-    "title": "example_EFSAccessPointRoot - aws_efs_access_point.fail2",
-    "description": "Failing resource aws_efs_access_point.res2in example example_EFSAccessPointRoot.",
+    "title": "example_EFSAccessPointRoot - aws_efs_access_point.res2",
+    "description": "Failing resource aws_efs_access_point.res2 in example example_EFSAccessPointRoot.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_EFSAccessPointRoot/main.tf"
     ],
-    "impacted_code": "aws_efs_access_point.fail2"
+    "impacted_code": "aws_efs_access_point.res2"
   },
   {
     "title": "example_ECSServiceFargateLatest - aws_ecs_service.res",
@@ -603,13 +603,13 @@
     "impacted_code": "aws_ecs_task_definition.res"
   },
   {
-    "title": "example_ECSContainerReadOnlyRoot - aws_ecs_task_definition.fail2",
-    "description": "Failing resource aws_ecs_task_definition.res2in example example_ECSContainerReadOnlyRoot.",
+    "title": "example_ECSContainerReadOnlyRoot - aws_ecs_task_definition.res2",
+    "description": "Failing resource aws_ecs_task_definition.res2 in example example_ECSContainerReadOnlyRoot.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_ECSContainerReadOnlyRoot/main.tf"
     ],
-    "impacted_code": "aws_ecs_task_definition.fail2"
+    "impacted_code": "aws_ecs_task_definition.res2"
   },
   {
     "title": "example_ECSContainerPrivilege - aws_ecs_task_definition.res",
@@ -648,13 +648,13 @@
     "impacted_code": "aws_lambda_function.res"
   },
   {
-    "title": "example_DeprecatedLambdaRuntime - aws_lambda_function.fail2",
-    "description": "Failing resource aws_lambda_function.res2in example example_DeprecatedLambdaRuntime.",
+    "title": "example_DeprecatedLambdaRuntime - aws_lambda_function.res2",
+    "description": "Failing resource aws_lambda_function.res2 in example example_DeprecatedLambdaRuntime.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_DeprecatedLambdaRuntime/main.tf"
     ],
-    "impacted_code": "aws_lambda_function.fail2"
+    "impacted_code": "aws_lambda_function.res2"
   },
   {
     "title": "example_DBSnapshotsArePrivate - aws_db_snapshot.res",
@@ -702,13 +702,13 @@
     "impacted_code": "aws_cloudsearch_domain.res"
   },
   {
-    "title": "example_CloudsearchDomainTLS - aws_cloudsearch_domain.fail2",
-    "description": "Failing resource aws_cloudsearch_domain.res2in example example_CloudsearchDomainTLS.",
+    "title": "example_CloudsearchDomainTLS - aws_cloudsearch_domain.res2",
+    "description": "Failing resource aws_cloudsearch_domain.res2 in example example_CloudsearchDomainTLS.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_CloudsearchDomainTLS/main.tf"
     ],
-    "impacted_code": "aws_cloudsearch_domain.fail2"
+    "impacted_code": "aws_cloudsearch_domain.res2"
   },
   {
     "title": "example_CloudsearchDomainEnforceHttps - aws_cloudsearch_domain.res",
@@ -720,13 +720,13 @@
     "impacted_code": "aws_cloudsearch_domain.res"
   },
   {
-    "title": "example_CloudsearchDomainEnforceHttps - aws_cloudsearch_domain.fail2",
-    "description": "Failing resource aws_cloudsearch_domain.res2in example example_CloudsearchDomainEnforceHttps.",
+    "title": "example_CloudsearchDomainEnforceHttps - aws_cloudsearch_domain.res2",
+    "description": "Failing resource aws_cloudsearch_domain.res2 in example example_CloudsearchDomainEnforceHttps.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_CloudsearchDomainEnforceHttps/main.tf"
     ],
-    "impacted_code": "aws_cloudsearch_domain.fail2"
+    "impacted_code": "aws_cloudsearch_domain.res2"
   },
   {
     "title": "example_CloudfrontDistributionDefaultRoot - aws_cloudfront_distribution.res",
@@ -756,13 +756,13 @@
     "impacted_code": "aws_cloudfront_distribution.res"
   },
   {
-    "title": "example_CloudfrontDistributionOriginFailover - aws_cloudfront_distribution.fail2",
-    "description": "Failing resource aws_cloudfront_distribution.res2in example example_CloudfrontDistributionOriginFailover.",
+    "title": "example_CloudfrontDistributionOriginFailover - aws_cloudfront_distribution.res2",
+    "description": "Failing resource aws_cloudfront_distribution.res2 in example example_CloudfrontDistributionOriginFailover.",
     "severity": "",
     "files": [
       "terraform/checks/resources/aws/GENERAL_SECURITY/example_CloudfrontDistributionOriginFailover/main.tf"
     ],
-    "impacted_code": "aws_cloudfront_distribution.fail2"
+    "impacted_code": "aws_cloudfront_distribution.res2"
   },
   {
     "title": "example_CloudfrontDistributionOriginFailover - aws_cloudfront_distribution.res3",
